@@ -168,7 +168,7 @@ The [BRA Codex](docs/codex.md) connects them into a complete operating model.
 | ![BRA Report page with a risk narrative and finding severity table.](docs/assets/screenshots/report-risk-summary.png) | ![BRA architecture with operator, command center, governance, agent tools, and supporting record flows.](docs/assets/screenshots/system-architecture.png) |
 | The report view combines the assessment narrative with a finding severity summary. | The operator works through the command center. Governance, privacy, records, and reviewed growth support the integrated agent workflow. |
 
-[Browse all 19 views](docs/screenshots.md) · [Open the interactive gallery](pages/index.html#screenshots)
+[Browse all 19 views](docs/screenshots.md) · [Open the interactive gallery](docs/index.html#screenshots)
 
 ## Who uses BRA
 
@@ -329,7 +329,7 @@ The [public architecture preview](https://github.com/GainSec/BattleReadyArmor-Pu
 
 ## Interactive technical atlas
 
-Open the [self-contained technical atlas](pages/index.html) for the capability catalog, architecture diagrams, operating traces, searchable guides, and source excerpts.
+Open the [self-contained technical atlas](docs/index.html) for the capability catalog, architecture diagrams, operating traces, searchable guides, and source excerpts.
 The complete site works offline as one HTML file.
 Read [Documentation site](docs/site.md) for rebuilding and GitHub Pages publication.
 

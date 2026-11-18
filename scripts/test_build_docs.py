@@ -135,6 +135,12 @@ class AtlasContract(unittest.TestCase):
                 ],
             }
             (root / "docs/site.json").write_text(json.dumps(profile))
+            generated = {pathlib.Path("docs/source-index.md"), pathlib.Path("docs/index.html"), pathlib.Path("docs/.nojekyll")}
+            inputs = {
+                p.relative_to(root): p.read_bytes()
+                for p in root.rglob("*")
+                if p.is_file() and p.relative_to(root) not in generated
+            }
             r = subprocess.run(
                 ["python3", str(BUILDER), "--root", str(root)],
                 capture_output=True,
@@ -142,10 +148,10 @@ class AtlasContract(unittest.TestCase):
             )
             self.assertEqual(r.returncode, 0, r.stderr + r.stdout)
             self.assertTrue(
-                (root / "pages/index.html").is_file(),
-                "The builder must emit an isolated Pages HTML artifact",
+                (root / "docs/index.html").is_file(),
+                "The builder must emit the branch-published docs HTML artifact",
             )
-            page = (root / "pages/index.html").read_text()
+            page = (root / "docs/index.html").read_text()
             self.assertIn(
                 "Empty module marker", (root / "docs/source-index.md").read_text()
             )
@@ -227,12 +233,10 @@ class AtlasContract(unittest.TestCase):
                 tags.local_links,
                 "Published navigation must stay within the standalone HTML document",
             )
-            self.assertTrue((root / "pages/.nojekyll").exists())
-            self.assertEqual(
-                {p.name for p in (root / "pages").iterdir()},
-                {"index.html", ".nojekyll"},
-                "Pages output must contain only the standalone page and its static marker",
-            )
+            self.assertTrue((root / "docs/.nojekyll").exists())
+            self.assertFalse((root / "pages").exists(), "The builder must not create the old publication directory")
+            for relative_path, original in inputs.items():
+                self.assertEqual((root / relative_path).read_bytes(), original, f"The builder changed input {relative_path}")
             self.assertTrue((root / "docs/usage.md").exists())
             self.assertTrue((root / "docs/site.json").exists())
 
