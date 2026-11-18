@@ -18,6 +18,8 @@ BRA applies Ready Armor to operator-led assessments.
 Agent Ready Armor (ARA) applies the same approach to governed autonomous agent tasks.
 Each product implements its own runtime and control interfaces.
 
+[More Info](https://gainsec.github.io/ReadyArmor-Battle-Ready-Armor-BRA/)
+
 ## Why Ready Armor is different
 
 Ready Armor connects control of the current action with knowledge retained for later work.
