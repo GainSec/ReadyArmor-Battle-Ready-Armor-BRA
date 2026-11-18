@@ -1,0 +1,42 @@
+{
+  "ui_pack_version": 2,
+  "meta": {
+    "name": "executive-calm",
+    "description": "Low-noise executive visibility workspace",
+    "version": "2"
+  },
+  "theme_tokens": {
+    "option_label_max_chars": 24,
+    "accent": "$success",
+    "muted": "$text-muted",
+    "panel_border_style": "round $surface-lighten-1",
+    "sidebar_width": 24
+  },
+  "layout": {
+    "kind": "executive-calm",
+    "density": "compact"
+  },
+  "views": {
+    "splash": {
+      "show_quote": true
+    },
+    "engage": {
+      "sidebar_default_visible": false,
+      "options_density": "compact",
+      "show_secondary_hints": false,
+      "status_bar_compact": true
+    },
+    "menu": {
+      "preview_density": "compact"
+    }
+  },
+  "bindings": {},
+  "assets": {
+    "branding_title": "Battle Ready Armor",
+    "branding_subtitle": "Executive Calm",
+    "quotes": [
+      "Decisions sharpen when noise drops."
+    ]
+  },
+  "hooks": {}
+}

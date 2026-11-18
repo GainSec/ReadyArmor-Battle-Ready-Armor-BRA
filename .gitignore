@@ -1,0 +1,35 @@
+# Python environments and generated files
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+# Local tools
+.DS_Store
+.serena/
+.claude/
+.playwright-mcp/
+.codebase-memory/
+# Local credentials and runtime state
+.env
+.env.*
+!.env.example
+.bra/
+.bra-*.json
+.bra-*-token
+apikey.txt
+body/layer3-engagement/
+body/layer4-telemetry/
+layer4-telemetry/
+body/BACKUPS/
+body/packup_*.tar.gz
+boots/harness/output/
+*.log
+*.pid
+node_modules/
+tmp/
+boots/.bra-gui-docs-password
+boots/.bra-gui-debug-password

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-theme="ghost-ops">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard</title>
+    <link rel="icon" type="image/png" href="/static/favicon-blue.png">
+    <script src="/static/tailwind.js"></script>
+    <script defer src="/static/manager.js?v=20260304-1"></script>
+    <script defer src="/static/alpine.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        :root {
+            --surface-deep: #010409;
+            --surface-0: #0d1117;
+            --surface-1: #161b22;
+            --surface-2: #1c2128;
+            --surface-3: #21262d;
+            --border-default: #30363d;
+            --border-subtle: #21262d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --color-ok: #3fb950;
+            --color-warn: #d29922;
+            --color-bad: #f85149;
+        }
+        body {
+            background: var(--surface-0);
+            color: var(--text-primary);
+        }
+        .manager-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-default);
+            border-radius: 6px;
+        }
+        .risk-low { color: var(--color-ok); }
+        .risk-medium { color: var(--color-warn); }
+        .risk-high, .risk-critical { color: var(--color-bad); }
+        .metric-ok { color: var(--color-ok); }
+        .metric-warn { color: var(--color-warn); }
+        .metric-bad { color: var(--color-bad); }
+        .metric-info { color: var(--accent); }
+    </style>
+</head>
+<body>
+<div x-data="managerApp()" x-init="init()" class="min-h-screen">
+    <header class="px-4 py-4 border-b" style="border-color: var(--border-default);">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div>
+                <h1 class="text-2xl font-bold">Manager Dashboard</h1>
+                <p class="text-sm" style="color: var(--text-secondary);">Portfolio posture and decision queue</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button @click="loadAll()"
+                        class="px-3 py-1.5 rounded text-sm"
+                        style="background: var(--surface-2); border: 1px solid var(--border-default);">
+                    Refresh
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="px-4 py-4">
+        <div class="max-w-7xl mx-auto space-y-4">
+            <div x-show="!token" class="manager-card p-4">
+                <div class="text-sm mb-2" style="color: var(--text-secondary);">Authentication token required to load manager data.</div>
+                <div class="flex flex-wrap gap-2">
+                    <input type="password" x-model="tokenInput" placeholder="Paste BRA GUI token"
+                           class="px-3 py-2 rounded text-sm flex-1 min-w-[220px]"
+                           style="background: var(--surface-0); border: 1px solid var(--border-default); color: var(--text-primary);">
+                    <button @click="saveToken()"
+                            class="px-3 py-2 rounded text-sm"
+                            style="background: var(--accent); color: #0d1117;">
+                        Save Token
+                    </button>
+                </div>
+            </div>
+
+            <div x-show="error" class="manager-card p-3 text-sm" style="color: var(--bad);" x-text="error"></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+                <div class="manager-card p-4">
+                    <div class="text-xs uppercase tracking-wide" style="color: var(--text-secondary);">Active Engagements</div>
+                    <div class="text-2xl font-bold mt-1 metric-ok" x-text="kpis.active_engagements"></div>
+                </div>
+                <div class="manager-card p-4">
+                    <div class="text-xs uppercase tracking-wide" style="color: var(--text-secondary);">Critical + High</div>
+                    <div class="text-2xl font-bold mt-1 metric-bad" x-text="kpis.critical_high"></div>
+                </div>
+                <div class="manager-card p-4">
+                    <div class="text-xs uppercase tracking-wide" style="color: var(--text-secondary);">Pending Decisions</div>
+                    <div class="text-2xl font-bold mt-1 metric-warn" x-text="kpis.pending_decisions"></div>
+                </div>
+                <div class="manager-card p-4">
+                    <div class="text-xs uppercase tracking-wide" style="color: var(--text-secondary);">Deliverable Readiness</div>
+                    <div class="text-2xl font-bold mt-1 metric-info" x-text="kpis.readiness_avg + '%'"></div>
+                    <div class="text-[10px] mt-1" style="color: var(--text-secondary);">Average report readiness across visible cards</div>
+                </div>
+            </div>
+
+            <section class="manager-card p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm font-semibold uppercase tracking-wide" style="color: var(--text-secondary);">Portfolio</h2>
+                    <span class="text-xs" style="color: var(--text-secondary);" x-text="'Cards: ' + cards.length"></span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+                    <template x-for="card in cards" :key="card.id">
+                        <button type="button"
+                                @click="selectCard(card.id)"
+                                class="text-left rounded p-3 border transition"
+                                :style="selectedId === card.id
+                                    ? 'background: var(--surface-2); border-color: var(--accent);'
+                                    : 'background: var(--surface-0); border-color: var(--border-default);'">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="font-semibold" x-text="card.name"></div>
+                                <div class="text-xs uppercase px-2 py-0.5 rounded"
+                                     style="border: 1px solid var(--border-default);"
+                                     x-text="card.status || 'Unknown'"></div>
+                            </div>
+                            <div class="text-xs mt-2" :class="riskClass(card.risk_level)">
+                                Risk: <span x-text="card.risk_level || 'UNKNOWN'"></span>
+                            </div>
+                            <div class="text-xs mt-1" style="color: var(--text-secondary);">
+                                Queue: <span x-text="(card.pending_findings || 0) + (card.pending_decisions || 0)"></span>
+                            </div>
+                            <div class="text-xs mt-1" style="color: var(--text-secondary);">
+                                Updated: <span x-text="formatTime(card.last_update)"></span>
+                            </div>
+                        </button>
+                    </template>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 xl:grid-cols-3 gap-3">
+                <div class="manager-card p-4">
+                    <h3 class="text-sm font-semibold uppercase tracking-wide mb-3" style="color: var(--text-secondary);">Risk Posture</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span style="color: var(--text-secondary);">Kill Switch</span><span x-text="selected.kill_switch || 'UNKNOWN'"></span></div>
+                        <div class="flex justify-between"><span style="color: var(--text-secondary);">Critical+High</span><span x-text="selected.critical_high || 0"></span></div>
+                        <div class="flex justify-between"><span style="color: var(--text-secondary);">Risk Level</span><span :class="riskClass(selected.risk_level)" x-text="selected.risk_level || 'UNKNOWN'"></span></div>
+                    </div>
+                </div>
+                <div class="manager-card p-4">
+                    <h3 class="text-sm font-semibold uppercase tracking-wide mb-3" style="color: var(--text-secondary);">Operations</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span style="color: var(--text-secondary);">Status</span><span x-text="selected.status || 'Unknown'"></span></div>
+                        <div class="flex justify-between"><span style="color: var(--text-secondary);">Pending Findings</span><span x-text="selected.pending_findings || 0"></span></div>
+                        <div class="flex justify-between"><span style="color: var(--text-secondary);">Open Leads</span><span x-text="selected.open_leads || 0"></span></div>
+                    </div>
+                </div>
+                <div class="manager-card p-4">
+                    <h3 class="text-sm font-semibold uppercase tracking-wide mb-3" style="color: var(--text-secondary);">Quality</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span style="color: var(--text-secondary);">Coverage Gaps</span><span x-text="selected.coverage_gaps || 0"></span></div>
+                        <div class="flex justify-between"><span style="color: var(--text-secondary);">Readiness</span><span x-text="(selected.report_readiness || 0) + '%'"></span></div>
+                        <div class="flex justify-between"><span style="color: var(--text-secondary);">Telemetry Score</span><span x-text="selected.telemetry_score || 0"></span></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="manager-card p-4">
+                <h3 class="text-sm font-semibold uppercase tracking-wide mb-3" style="color: var(--text-secondary);">Action Queue</h3>
+                <ul class="space-y-2 text-sm">
+                    <template x-for="item in actionQueue" :key="item">
+                        <li x-text="item"></li>
+                    </template>
+                    <li x-show="!actionQueue.length" style="color: var(--text-secondary);">No urgent actions.</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="px-4 py-6">
+        <div class="max-w-7xl mx-auto flex justify-center">
+            <a :href="backUrl()"
+               class="px-4 py-2 rounded text-sm"
+               style="background: var(--surface-1); border: 1px solid var(--border-default);">
+                Back to Operator Dashboard
+            </a>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

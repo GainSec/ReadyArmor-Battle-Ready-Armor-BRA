@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRA Code Map - Complete</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    .container {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+    .sidebar {
+      width: 280px;
+      background: #1e293b;
+      padding: 16px;
+      overflow-y: auto;
+      border-right: 1px solid #334155;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar h2 {
+      font-size: 13px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .sidebar h3 {
+      font-size: 11px;
+      color: #64748b;
+      margin: 14px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .stats {
+      background: #334155;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .stat-count {
+      font-weight: 700;
+      color: #93c5fd;
+    }
+    .presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .preset-btn {
+      background: #334155;
+      border: 1px solid #475569;
+      color: #e2e8f0;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .preset-btn:hover { background: #475569; }
+    .preset-btn.active { border-color: #3b82f6; background: #1e3a5f; }
+    .layer-toggles, .connection-toggles {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toggle-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .toggle-item input { cursor: pointer; }
+    .toggle-item .color-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+    .toggle-item .count {
+      color: #64748b;
+      font-size: 10px;
+      margin-left: auto;
+    }
+    .comments-section {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      margin-top: 12px;
+    }
+    .comments-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .comment-item {
+      background: #334155;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 11px;
+    }
+    .comment-item .target {
+      font-weight: 600;
+      color: #93c5fd;
+      margin-bottom: 2px;
+    }
+    .comment-item .file {
+      font-family: monospace;
+      font-size: 10px;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+    .comment-item .text {
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+    .comment-item .delete-btn {
+      float: right;
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0;
+      margin-left: 8px;
+    }
+    .comment-item .delete-btn:hover { color: #f87171; }
+    .main-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .svg-container {
+      flex: 1;
+      position: relative;
+      overflow: auto;
+      background: #0f172a;
+    }
+    svg {
+      min-width: 1800px;
+      min-height: 1400px;
+    }
+    .zoom-controls {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      gap: 4px;
+    }
+    .zoom-btn {
+      background: #334155;
+      border: 1px solid #475569;
+      color: #e2e8f0;
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .zoom-btn:hover { background: #475569; }
+    .legend {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(30, 41, 59, 0.95);
+      border: 1px solid #475569;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 10px;
+    }
+    .legend-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #94a3b8;
+    }
+    .legend-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+    .prompt-area {
+      background: #1e293b;
+      border-top: 1px solid #334155;
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .prompt-text {
+      flex: 1;
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+      font-size: 11px;
+      line-height: 1.4;
+      color: #94a3b8;
+      background: #0f172a;
+      padding: 10px;
+      border-radius: 6px;
+      max-height: 80px;
+      overflow-y: auto;
+    }
+    .copy-btn {
+      background: #3b82f6;
+      border: none;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { background: #2563eb; }
+    .copy-btn.copied { background: #10b981; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 8px;
+      padding: 20px;
+      width: 400px;
+      max-width: 90%;
+    }
+    .modal h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    .modal .file-path {
+      font-family: monospace;
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+    .modal textarea {
+      width: 100%;
+      height: 100px;
+      background: #0f172a;
+      border: 1px solid #475569;
+      border-radius: 4px;
+      color: #e2e8f0;
+      padding: 10px;
+      font-family: inherit;
+      font-size: 13px;
+      resize: vertical;
+    }
+    .modal textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: flex-end;
+    }
+    .modal-btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      border: none;
+    }
+    .modal-btn.primary { background: #3b82f6; color: white; }
+    .modal-btn.primary:hover { background: #2563eb; }
+    .modal-btn.secondary { background: #475569; color: #e2e8f0; }
+    .modal-btn.secondary:hover { background: #64748b; }
+
+    /* SVG node styles */
+    .node { cursor: pointer; }
+    .node rect {
+      stroke-width: 2;
+      transition: stroke 0.2s;
+    }
+    .node:hover rect { stroke: #3b82f6; }
+    .node.has-comment rect { stroke: #f59e0b; stroke-width: 3; }
+    .node-label {
+      font-size: 10px;
+      font-weight: 600;
+      fill: #1e293b;
+    }
+    .node-sublabel {
+      font-size: 8px;
+      fill: #475569;
+      font-family: monospace;
+    }
+    .connection {
+      fill: none;
+      stroke-width: 1.5;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      fill: #475569;
+    }
+    .section-divider {
+      stroke: #334155;
+      stroke-dasharray: 4,4;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>BRA Code Map</h2>
+
+      <div class="stats">
+        <div class="stat-item"><span class="stat-count">57</span> scripts</div>
+        <div class="stat-item"><span class="stat-count">4</span> hooks</div>
+        <div class="stat-item"><span class="stat-count">19</span> libs</div>
+        <div class="stat-item"><span class="stat-count">34</span> main</div>
+      </div>
+
+      <h3>View Presets</h3>
+      <div class="presets">
+        <button class="preset-btn active" onclick="applyPreset('full', this)">Full System</button>
+        <button class="preset-btn" onclick="applyPreset('governance', this)">Governance</button>
+        <button class="preset-btn" onclick="applyPreset('hooks', this)">Hooks</button>
+        <button class="preset-btn" onclick="applyPreset('workflow', this)">Workflow</button>
+        <button class="preset-btn" onclick="applyPreset('intel', this)">Intelligence</button>
+        <button class="preset-btn" onclick="applyPreset('ops', this)">Ops</button>
+      </div>
+
+      <h3>Layers</h3>
+      <div class="layer-toggles">
+        <label class="toggle-item">
+          <input type="checkbox" checked onchange="toggleLayer('rules', this.checked)">
+          <span class="color-dot" style="background:#fca5a5"></span>
+          Layer 1 - Rules
+          <span class="count">(3)</span>
+        </label>
+        <label class="toggle-item">
+          <input type="checkbox" checked onchange="toggleLayer('templates', this.checked)">
+          <span class="color-dot" style="background:#5eead4"></span>
+          Layer 2 - Templates
+          <span class="count">(2)</span>
+        </label>
+        <label class="toggle-item">
+          <input type="checkbox" checked onchange="toggleLayer('engagement', this.checked)">
+          <span class="color-dot" style="background:#fde047"></span>
+          Layer 3 - Engagement
+          <span class="count">(3)</span>
+        </label>
+        <label class="toggle-item">
+          <input type="checkbox" checked onchange="toggleLayer('hooks', this.checked)">
+          <span class="color-dot" style="background:#a5b4fc"></span>
+          Hooks
+          <span class="count">(4)</span>
+        </label>
+        <label class="toggle-item">
+          <input type="checkbox" checked onchange="toggleLayer('libs', this.checked)">
+          <span class="color-dot" style="background:#86efac"></span>
+          Libraries
+          <span class="count">(19)</span>
+        </label>
+        <label class="toggle-item">
+          <input type="checkbox" checked onchange="toggleLayer('scripts', this.checked)">
+          <span class="color-dot" style="background:#f9a8d4"></span>
+          Main Scripts
+          <span class="count">(34)</span>
+        </label>
+      </div>
+
+      <h3>Connections</h3>
+      <div class="connection-toggles">
+        <label class="toggle-item">
+          <input type="checkbox" checked onchange="toggleConnection('reads', this.checked)">
+          <span class="color-dot" style="background:#3b82f6"></span>
+          Reads/Sources
+        </label>
+        <label class="toggle-item">
+          <input type="checkbox" checked onchange="toggleConnection('calls', this.checked)">
+          <span class="color-dot" style="background:#10b981"></span>
+          Calls/Invokes
+        </label>
+        <label class="toggle-item">
+          <input type="checkbox" checked onchange="toggleConnection('blocks', this.checked)">
+          <span class="color-dot" style="background:#ef4444"></span>
+          Blocks/Guards
+        </label>
+        <label class="toggle-item">
+          <input type="checkbox" checked onchange="toggleConnection('provides', this.checked)">
+          <span class="color-dot" style="background:#f59e0b"></span>
+          Provides/Tokens
+        </label>
+      </div>
+
+      <div class="comments-section">
+        <h3>Comments (<span id="commentCount">0</span>)</h3>
+        <div class="comments-list" id="commentsList">
+          <div style="color:#64748b; font-size:11px; padding:8px;">Click a component to add feedback...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-area">
+      <div class="svg-container">
+        <svg id="diagram" viewBox="0 0 1800 1400"></svg>
+        <div class="zoom-controls">
+          <button class="zoom-btn" onclick="zoom(1.2)">+</button>
+          <button class="zoom-btn" onclick="zoom(0.8)">−</button>
+          <button class="zoom-btn" onclick="resetZoom()">⟲</button>
+        </div>
+        <div class="legend">
+          <div class="legend-title">Connection Types</div>
+          <div class="legend-items">
+            <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Reads</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Calls</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Blocks</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Provides</div>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-area">
+        <div class="prompt-text" id="promptText">Click components in the diagram to add feedback comments...</div>
+        <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">Copy Prompt</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <h3 id="modalTitle">Component Name</h3>
+      <div class="file-path" id="modalPath">path/to/file.sh</div>
+      <textarea id="modalInput" placeholder="Enter your feedback or suggestions for this component..."></textarea>
+      <div class="modal-buttons">
+        <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+        <button class="modal-btn primary" onclick="saveComment()">Add Comment</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const svg = document.getElementById('diagram');
+    let currentScale = 1;
+    let currentNode = null;
+
+    const state = {
+      layers: {
+        rules: true,
+        templates: true,
+        engagement: true,
+        hooks: true,
+        libs: true,
+        scripts: true
+      },
+      connections: {
+        reads: true,
+        calls: true,
+        blocks: true,
+        provides: true
+      },
+      comments: []
+    };
+
+    const LAYER_COLORS = {
+      rules: '#fca5a5',
+      templates: '#5eead4',
+      engagement: '#fde047',
+      hooks: '#a5b4fc',
+      libs: '#86efac',
+      scripts: '#f9a8d4'
+    };
+
+    const CONNECTION_COLORS = {
+      reads: '#3b82f6',
+      calls: '#10b981',
+      blocks: '#ef4444',
+      provides: '#f59e0b'
+    };
+
+    // Node dimensions
+    const W = 120, H = 36;
+    const GAP_X = 140, GAP_Y = 55;
+
+    const nodes = [
+      // ============== LAYER 1 - RULES (y: 40) ==============
+      { id: 'claude-md', label: 'CLAUDE.md', path: 'CLAUDE.md', x: 40, y: 40, w: W, h: H, layer: 'rules' },
+      { id: 'roe-md', label: 'ROE.md', path: 'layer1/rules/roe.md', x: 40 + GAP_X, y: 40, w: W, h: H, layer: 'rules' },
+      { id: 'scope-template', label: 'scope.md', path: 'layer1/rules/scope.md', x: 40 + GAP_X*2, y: 40, w: W, h: H, layer: 'rules' },
+
+      // ============== LAYER 2 - TEMPLATES (y: 100) ==============
+      { id: 'cli-ref', label: 'CLI-REFERENCE', path: 'layer2-templates/CLI-REFERENCE.md', x: 40, y: 100, w: 130, h: H, layer: 'templates' },
+      { id: 'methodologies', label: 'methodologies/', path: 'layer2-templates/methodologies/', x: 40 + GAP_X + 10, y: 100, w: 130, h: H, layer: 'templates' },
+
+      // ============== LAYER 3 - ENGAGEMENT (y: 160) ==============
+      { id: 'scope-md', label: 'SCOPE.md', path: 'layer3-engagement/SCOPE.md', x: 40, y: 160, w: W, h: H, layer: 'engagement' },
+      { id: 'notes', label: 'layer3-engagement/NOTES/', path: 'layer3-engagement/NOTES/', x: 40 + GAP_X, y: 160, w: W, h: H, layer: 'engagement' },
+      { id: 'findings', label: 'FINDINGS.md', path: 'layer3-engagement/NOTES/FINDINGS.md', x: 40 + GAP_X*2, y: 160, w: W, h: H, layer: 'engagement' },
+
+      // ============== HOOKS (y: 40, right side) ==============
+      { id: 'bash-guard', label: 'bash-guard.py', path: 'layer1/hooks/bash-guard.py', x: 550, y: 40, w: 130, h: H, layer: 'hooks' },
+      { id: 'file-guard', label: 'file-guard.py', path: 'layer1/hooks/file-guard.py', x: 550, y: 40 + GAP_Y, w: 130, h: H, layer: 'hooks' },
+      { id: 'gov-reminder', label: 'gov-reminder.py', path: 'layer1/hooks/governance-reminder.py', x: 550, y: 40 + GAP_Y*2, w: 140, h: H, layer: 'hooks' },
+      { id: 'track-post', label: 'track-post.py', path: 'layer1/hooks/track-post.py', x: 550, y: 40 + GAP_Y*3, w: 130, h: H, layer: 'hooks' },
+
+      // ============== LIBRARIES - Row 1 (y: 280) ==============
+      { id: 'killswitch', label: 'killswitch.py', path: 'layer1/lib/killswitch.py', x: 40, y: 280, w: W, h: H, layer: 'libs' },
+      { id: 'tokens', label: 'tokens.py', path: 'layer1/lib/tokens.py', x: 40 + GAP_X, y: 280, w: W, h: H, layer: 'libs' },
+      { id: 'track', label: 'track.py', path: 'layer1/lib/track.py', x: 40 + GAP_X*2, y: 280, w: W, h: H, layer: 'libs' },
+      { id: 'lock', label: 'lock.py', path: 'layer1/lib/lock.py', x: 40 + GAP_X*3, y: 280, w: W, h: H, layer: 'libs' },
+      { id: 'watch', label: 'watch.py', path: 'layer1/lib/watch.py', x: 40 + GAP_X*4, y: 280, w: W, h: H, layer: 'libs' },
+      { id: 'banner', label: 'banner.py', path: 'layer1/lib/banner.py', x: 40 + GAP_X*5, y: 280, w: W, h: H, layer: 'libs' },
+
+      // ============== LIBRARIES - Row 2 (y: 335) ==============
+      { id: 'scope-validate', label: 'scope_validate.py', path: 'layer1/lib/scope_validate.py', x: 40, y: 335, w: 130, h: H, layer: 'libs' },
+      { id: 'active-check', label: 'active_check.py', path: 'layer1/lib/active_check.py', x: 40 + GAP_X + 10, y: 335, w: 130, h: H, layer: 'libs' },
+      { id: 'offensive-check', label: 'offensive_check.py', path: 'layer1/lib/offensive_check.py', x: 40 + GAP_X*2 + 20, y: 335, w: 140, h: H, layer: 'libs' },
+      { id: 'target-scope', label: 'target_scope.py', path: 'layer1/lib/target_scope.py', x: 40 + GAP_X*3 + 30, y: 335, w: 130, h: H, layer: 'libs' },
+      { id: 'target-type', label: 'target_type_det.py', path: 'layer1/lib/target_type_detector.py', x: 40 + GAP_X*4 + 40, y: 335, w: 135, h: H, layer: 'libs' },
+
+      // ============== LIBRARIES - Row 3 (y: 390) ==============
+      { id: 'methodology-loader', label: 'methodology_loader', path: 'layer1/lib/methodology_loader.py', x: 40, y: 390, w: 140, h: H, layer: 'libs' },
+      { id: 'phase-invoker', label: 'phase_invoker.py', path: 'layer1/lib/phase_invoker.py', x: 40 + GAP_X + 20, y: 390, w: 130, h: H, layer: 'libs' },
+      { id: 'tool-resolver', label: 'tool_resolver.py', path: 'layer1/lib/tool_resolver.py', x: 40 + GAP_X*2 + 30, y: 390, w: 130, h: H, layer: 'libs' },
+      { id: 'ollama', label: 'ollama.py', path: 'layer1/lib/ollama.py', x: 40 + GAP_X*3 + 40, y: 390, w: W, h: H, layer: 'libs' },
+      { id: 'handoff', label: 'handoff.py', path: 'layer1/lib/handoff.py', x: 40 + GAP_X*4 + 40, y: 390, w: W, h: H, layer: 'libs' },
+      { id: 'promotion', label: 'promotion.py', path: 'layer1/lib/promotion.py', x: 40 + GAP_X*5 + 40, y: 390, w: W, h: H, layer: 'libs' },
+
+      // ============== LIBRARIES - Row 4 (y: 445) ==============
+      { id: 'banner-agentic', label: 'banner-agentic.py', path: 'layer1/lib/banner-agentic.py', x: 40, y: 445, w: 140, h: H, layer: 'libs' },
+      { id: 'banner-metadata', label: 'banner/metadata.py', path: 'layer1/lib/banner/metadata.py', x: 40 + GAP_X + 20, y: 445, w: 130, h: H, layer: 'libs' },
+
+      // ============== MAIN SCRIPTS - GOVERNANCE (y: 530) ==============
+      { id: 'danger-check', label: 'danger_check.py', path: 'layer1/scripts/danger_check.py', x: 40, y: 530, w: 130, h: H, layer: 'scripts' },
+      { id: 'notes-guard', label: 'notes_guard.py', path: 'layer1/scripts/notes_guard.py', x: 40 + GAP_X + 10, y: 530, w: 130, h: H, layer: 'scripts' },
+      { id: 'approval-gate', label: 'approval-gate.py', path: 'layer1/scripts/approval-gate.py', x: 40 + GAP_X*2 + 20, y: 530, w: 130, h: H, layer: 'scripts' },
+      { id: 'offensive-gate', label: 'offensive_gate.py', path: 'layer1/scripts/offensive_gate.py', x: 40 + GAP_X*3 + 30, y: 530, w: 140, h: H, layer: 'scripts' },
+      { id: 'approve-target', label: 'approve-target.py', path: 'layer1/scripts/approve-target.py', x: 40 + GAP_X*4 + 40, y: 530, w: 140, h: H, layer: 'scripts' },
+
+      // ============== MAIN SCRIPTS - ENGAGEMENT LIFECYCLE (y: 585) ==============
+      { id: 'battlestations', label: 'battlestations.py', path: 'layer1/scripts/battlestations.py', x: 40, y: 585, w: 140, h: H, layer: 'scripts' },
+      { id: 'scope-intake', label: 'scope-intake.py', path: 'layer1/scripts/scope-intake.py', x: 40 + GAP_X + 20, y: 585, w: 130, h: H, layer: 'scripts' },
+      { id: 'precheck', label: 'precheck.py', path: 'layer1/scripts/precheck.py', x: 40 + GAP_X*2 + 30, y: 585, w: W, h: H, layer: 'scripts' },
+      { id: 'status', label: 'status.py', path: 'layer1/scripts/status.py', x: 40 + GAP_X*3 + 30, y: 585, w: W, h: H, layer: 'scripts' },
+      { id: 'bra', label: 'bra.py', path: 'layer1/scripts/bra.py', x: 40 + GAP_X*4 + 30, y: 585, w: W, h: H, layer: 'scripts' },
+
+      // ============== MAIN SCRIPTS - AGENTIC (y: 640) ==============
+      { id: 'agentic-handler', label: 'agentic-handler.py', path: 'layer1/scripts/agentic-handler.py', x: 40, y: 640, w: 140, h: H, layer: 'scripts' },
+      { id: 'hunt', label: 'hunt.py', path: 'layer1/scripts/hunt.py', x: 40 + GAP_X + 20, y: 640, w: W, h: H, layer: 'scripts' },
+      { id: 'leads', label: 'leads.py', path: 'layer1/scripts/leads.py', x: 40 + GAP_X*2 + 20, y: 640, w: W, h: H, layer: 'scripts' },
+      { id: 'dry-run', label: 'dry-run.sh', path: 'layer1/scripts/dry-run.sh', x: 40 + GAP_X*3 + 20, y: 640, w: W, h: H, layer: 'scripts' },
+      { id: 'disclose', label: 'disclose.sh', path: 'layer1/scripts/disclose.sh', x: 40 + GAP_X*4 + 20, y: 640, w: W, h: H, layer: 'scripts' },
+
+      // ============== MAIN SCRIPTS - DATA MANAGEMENT (y: 695) ==============
+      { id: 'integrate-ingest', label: 'integrate-ingest', path: 'layer1/scripts/integrate-ingest.sh', x: 40, y: 695, w: 140, h: H, layer: 'scripts' },
+      { id: 'remote-ingest', label: 'remote-ingest.sh', path: 'layer1/scripts/remote-ingest.sh', x: 40 + GAP_X + 20, y: 695, w: 140, h: H, layer: 'scripts' },
+      { id: 'dedupe-integrated', label: 'dedupe-integr.sh', path: 'layer1/scripts/dedupe-integrated.sh', x: 40 + GAP_X*2 + 30, y: 695, w: 140, h: H, layer: 'scripts' },
+      { id: 'ref-harvest', label: 'ref_harvest.sh', path: 'layer1/scripts/ref_harvest.sh', x: 40 + GAP_X*3 + 40, y: 695, w: 130, h: H, layer: 'scripts' },
+      { id: 'validate-mappings', label: 'validate-map.sh', path: 'layer1/scripts/validate-mappings.sh', x: 40 + GAP_X*4 + 50, y: 695, w: 130, h: H, layer: 'scripts' },
+
+      // ============== MAIN SCRIPTS - REPORTING (y: 750) ==============
+      { id: 'lessons-learned', label: 'lessons-learned', path: 'layer1/scripts/lessons-learned.sh', x: 40, y: 750, w: 140, h: H, layer: 'scripts' },
+      { id: 'stats', label: 'stats.sh', path: 'layer1/scripts/stats.sh', x: 40 + GAP_X + 20, y: 750, w: W, h: H, layer: 'scripts' },
+      { id: 'audit', label: 'audit.sh', path: 'layer1/scripts/audit.sh', x: 40 + GAP_X*2 + 20, y: 750, w: W, h: H, layer: 'scripts' },
+      { id: 'growth', label: 'growth.sh', path: 'layer1/scripts/growth.sh', x: 40 + GAP_X*3 + 20, y: 750, w: W, h: H, layer: 'scripts' },
+      { id: 'self-improvement', label: 'self-improv.sh', path: 'layer1/scripts/self-improvement.sh', x: 40 + GAP_X*4 + 20, y: 750, w: 130, h: H, layer: 'scripts' },
+
+      // ============== MAIN SCRIPTS - DEPLOYMENT (y: 805) ==============
+      { id: 'deploy', label: 'deploy.sh', path: 'layer1/scripts/deploy.sh', x: 40, y: 805, w: W, h: H, layer: 'scripts' },
+      { id: 'prep', label: 'prep.sh', path: 'layer1/scripts/prep.sh', x: 40 + GAP_X, y: 805, w: W, h: H, layer: 'scripts' },
+      { id: 'prep-deploy', label: 'prep-deploy.sh', path: 'layer1/scripts/prep-deploy.sh', x: 40 + GAP_X*2, y: 805, w: 130, h: H, layer: 'scripts' },
+      { id: 'packup', label: 'packup.sh', path: 'layer1/scripts/packup.sh', x: 40 + GAP_X*3 + 10, y: 805, w: W, h: H, layer: 'scripts' },
+      { id: 'backup', label: 'backup.sh', path: 'layer1/scripts/backup.sh', x: 40 + GAP_X*4 + 10, y: 805, w: W, h: H, layer: 'scripts' },
+      { id: 'restore', label: 'restore.sh', path: 'layer1/scripts/restore.sh', x: 40 + GAP_X*5 + 10, y: 805, w: W, h: H, layer: 'scripts' },
+
+      // ============== MAIN SCRIPTS - UTILITIES (y: 860) ==============
+      { id: 'reset', label: 'reset.sh', path: 'layer1/scripts/reset.sh', x: 40, y: 860, w: W, h: H, layer: 'scripts' },
+      { id: 'generate-docs', label: 'generate-docs', path: 'layer1/scripts/generate-docs.sh', x: 40 + GAP_X, y: 860, w: 130, h: H, layer: 'scripts' },
+      { id: 'run-tests', label: 'run-tests.sh', path: 'layer1/scripts/run-tests.sh', x: 40 + GAP_X*2 + 10, y: 860, w: 130, h: H, layer: 'scripts' },
+    ];
+
+    const connections = [
+      // =========== KILL SWITCH CHAIN ===========
+      { from: 'claude-md', to: 'killswitch', type: 'reads', label: 'STOP/CLEAR' },
+      { from: 'killswitch', to: 'bash-guard', type: 'blocks', label: 'exit 99' },
+      { from: 'killswitch', to: 'danger-check', type: 'blocks', label: 'checked first' },
+
+      // =========== TOKEN FLOW ===========
+      { from: 'roe-md', to: 'tokens', type: 'reads', label: 'GRANTED markers' },
+      { from: 'tokens', to: 'danger-check', type: 'provides', label: 'DESTRUCTIVE' },
+      { from: 'tokens', to: 'bash-guard', type: 'provides', label: 'PUSH' },
+      { from: 'tokens', to: 'offensive-gate', type: 'provides', label: 'OFFENSIVE' },
+
+      // =========== HOOK CHAINS ===========
+      { from: 'bash-guard', to: 'killswitch', type: 'calls', label: 'source' },
+      { from: 'bash-guard', to: 'danger-check', type: 'calls', label: 'invoke' },
+      { from: 'bash-guard', to: 'active-check', type: 'calls', label: 'source' },
+      { from: 'file-guard', to: 'notes-guard', type: 'calls', label: 'for layer3-engagement/NOTES/' },
+      { from: 'file-guard', to: 'notes', type: 'blocks', label: 'append-only' },
+      { from: 'track-post', to: 'track', type: 'calls', label: 'source' },
+      { from: 'gov-reminder', to: 'claude-md', type: 'reads', label: 'context' },
+
+      // =========== LAYER FLOW ===========
+      { from: 'scope-template', to: 'scope-md', type: 'provides', label: 'template' },
+      { from: 'scope-md', to: 'scope-validate', type: 'reads', label: 'validates' },
+      { from: 'methodologies', to: 'methodology-loader', type: 'reads', label: 'loads' },
+
+      // =========== BATTLESTATIONS FLOW ===========
+      { from: 'battlestations', to: 'scope-validate', type: 'calls', label: 'on init' },
+      { from: 'battlestations', to: 'precheck', type: 'calls', label: 'first' },
+      { from: 'battlestations', to: 'banner', type: 'calls', label: 'display' },
+
+      // =========== AGENTIC FLOW ===========
+      { from: 'agentic-handler', to: 'methodology-loader', type: 'calls', label: 'load' },
+      { from: 'agentic-handler', to: 'phase-invoker', type: 'calls', label: 'run' },
+      { from: 'agentic-handler', to: 'banner-agentic', type: 'calls', label: 'display' },
+      { from: 'phase-invoker', to: 'tool-resolver', type: 'calls', label: 'resolve' },
+      { from: 'hunt', to: 'target-scope', type: 'calls', label: 'check scope' },
+      { from: 'hunt', to: 'target-type', type: 'calls', label: 'detect type' },
+
+      // =========== APPROVAL GATES ===========
+      { from: 'offensive-gate', to: 'offensive-check', type: 'calls', label: 'validate' },
+      { from: 'approve-target', to: 'target-scope', type: 'calls', label: 'scope check' },
+      { from: 'approval-gate', to: 'tokens', type: 'reads', label: 'token check' },
+
+      // =========== NOTES PROTECTION ===========
+      { from: 'notes-guard', to: 'findings', type: 'blocks', label: 'no truncation' },
+      { from: 'notes-guard', to: 'notes', type: 'blocks', label: 'append-only' },
+
+      // =========== TRACKING ===========
+      { from: 'danger-check', to: 'track', type: 'calls', label: 'logs' },
+      { from: 'status', to: 'track', type: 'reads', label: 'reads log' },
+
+      // =========== SCOPE INTAKE ===========
+      { from: 'scope-intake', to: 'scope-validate', type: 'calls', label: 'validate' },
+      { from: 'scope-intake', to: 'scope-md', type: 'provides', label: 'creates' },
+
+      // =========== DATA FLOW ===========
+      { from: 'integrate-ingest', to: 'findings', type: 'provides', label: 'writes' },
+      { from: 'remote-ingest', to: 'integrate-ingest', type: 'calls', label: 'integrates' },
+      { from: 'dedupe-integrated', to: 'findings', type: 'reads', label: 'dedupes' },
+
+      // =========== DEPLOYMENT ===========
+      { from: 'prep-deploy', to: 'prep', type: 'calls', label: 'prepares' },
+      { from: 'deploy', to: 'prep-deploy', type: 'calls', label: 'after prep' },
+      { from: 'backup', to: 'packup', type: 'calls', label: 'packages' },
+
+      // =========== REPORTING ===========
+      { from: 'lessons-learned', to: 'findings', type: 'reads', label: 'analyzes' },
+      { from: 'stats', to: 'track', type: 'reads', label: 'metrics' },
+      { from: 'audit', to: 'track', type: 'reads', label: 'reviews' },
+
+      // =========== DOCS & TESTS ===========
+      { from: 'generate-docs', to: 'cli-ref', type: 'provides', label: 'generates' },
+      { from: 'run-tests', to: 'precheck', type: 'calls', label: 'verify' },
+    ];
+
+    function getNodeById(id) {
+      return nodes.find(n => n.id === id);
+    }
+
+    function drawNode(node) {
+      const hasComment = state.comments.some(c => c.target === node.id);
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.setAttribute('class', `node ${hasComment ? 'has-comment' : ''}`);
+      g.setAttribute('data-id', node.id);
+      g.onclick = () => openModal(node);
+
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', node.x);
+      rect.setAttribute('y', node.y);
+      rect.setAttribute('width', node.w);
+      rect.setAttribute('height', node.h);
+      rect.setAttribute('rx', 5);
+      rect.setAttribute('fill', LAYER_COLORS[node.layer]);
+      rect.setAttribute('stroke', hasComment ? '#f59e0b' : '#475569');
+
+      const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      label.setAttribute('class', 'node-label');
+      label.setAttribute('x', node.x + node.w / 2);
+      label.setAttribute('y', node.y + 14);
+      label.setAttribute('text-anchor', 'middle');
+      label.textContent = node.label;
+
+      const sublabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      sublabel.setAttribute('class', 'node-sublabel');
+      sublabel.setAttribute('x', node.x + node.w / 2);
+      sublabel.setAttribute('y', node.y + 26);
+      sublabel.setAttribute('text-anchor', 'middle');
+      // Truncate long paths
+      let shortPath = node.path;
+      if (shortPath.length > 20) shortPath = '...' + shortPath.slice(-17);
+      sublabel.textContent = shortPath;
+
+      g.appendChild(rect);
+      g.appendChild(label);
+      g.appendChild(sublabel);
+      return g;
+    }
+
+    function drawSectionLabel(text, x, y) {
+      const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      label.setAttribute('class', 'section-label');
+      label.setAttribute('x', x);
+      label.setAttribute('y', y);
+      label.textContent = text;
+      return label;
+    }
+
+    function drawSectionDivider(y) {
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('class', 'section-divider');
+      line.setAttribute('x1', 20);
+      line.setAttribute('y1', y);
+      line.setAttribute('x2', 880);
+      line.setAttribute('y2', y);
+      return line;
+    }
+
+    function drawConnection(conn) {
+      const from = getNodeById(conn.from);
+      const to = getNodeById(conn.to);
+      if (!from || !to) return null;
+      if (!state.layers[from.layer] || !state.layers[to.layer]) return null;
+      if (!state.connections[conn.type]) return null;
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('class', 'connection');
+      path.setAttribute('stroke', CONNECTION_COLORS[conn.type]);
+      path.setAttribute('marker-end', `url(#arrow-${conn.type})`);
+
+      // Calculate best connection points
+      const x1 = from.x + from.w / 2;
+      const y1 = from.y + from.h / 2;
+      const x2 = to.x + to.w / 2;
+      const y2 = to.y + to.h / 2;
+
+      let startX, startY, endX, endY;
+
+      if (Math.abs(x2 - x1) > Math.abs(y2 - y1)) {
+        // Horizontal connection
+        if (x2 > x1) {
+          startX = from.x + from.w;
+          endX = to.x;
+        } else {
+          startX = from.x;
+          endX = to.x + to.w;
+        }
+        startY = from.y + from.h / 2;
+        endY = to.y + to.h / 2;
+      } else {
+        // Vertical connection
+        startX = from.x + from.w / 2;
+        endX = to.x + to.w / 2;
+        if (y2 > y1) {
+          startY = from.y + from.h;
+          endY = to.y;
+        } else {
+          startY = from.y;
+          endY = to.y + to.h;
+        }
+      }
+
+      // Bezier curve
+      const dx = endX - startX;
+      const dy = endY - startY;
+      const midX = startX + dx / 2;
+      const midY = startY + dy / 2;
+
+      let d;
+      if (Math.abs(dx) > Math.abs(dy)) {
+        d = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
+      } else {
+        d = `M ${startX} ${startY} C ${startX} ${midY}, ${endX} ${midY}, ${endX} ${endY}`;
+      }
+      path.setAttribute('d', d);
+
+      // Style based on type
+      if (conn.type === 'calls') {
+        path.setAttribute('stroke-dasharray', '6,3');
+      } else if (conn.type === 'provides') {
+        path.setAttribute('stroke-dasharray', '8,4');
+      }
+
+      return path;
+    }
+
+    function createArrowMarkers() {
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+
+      Object.entries(CONNECTION_COLORS).forEach(([type, color]) => {
+        const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+        marker.setAttribute('id', `arrow-${type}`);
+        marker.setAttribute('markerWidth', '8');
+        marker.setAttribute('markerHeight', '6');
+        marker.setAttribute('refX', '7');
+        marker.setAttribute('refY', '3');
+        marker.setAttribute('orient', 'auto');
+
+        const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        polygon.setAttribute('points', '0 0, 8 3, 0 6');
+        polygon.setAttribute('fill', color);
+
+        marker.appendChild(polygon);
+        defs.appendChild(marker);
+      });
+
+      return defs;
+    }
+
+    function render() {
+      svg.innerHTML = '';
+      svg.appendChild(createArrowMarkers());
+
+      // Section labels
+      if (state.layers.rules) svg.appendChild(drawSectionLabel('LAYER 1 - RULES', 40, 28));
+      if (state.layers.templates) svg.appendChild(drawSectionLabel('LAYER 2 - TEMPLATES', 40, 88));
+      if (state.layers.engagement) svg.appendChild(drawSectionLabel('LAYER 3 - ENGAGEMENT', 40, 148));
+      if (state.layers.hooks) svg.appendChild(drawSectionLabel('HOOKS', 550, 28));
+      if (state.layers.libs) {
+        svg.appendChild(drawSectionLabel('LIBRARIES (19)', 40, 268));
+        svg.appendChild(drawSectionDivider(255));
+      }
+      if (state.layers.scripts) {
+        svg.appendChild(drawSectionLabel('MAIN SCRIPTS - Governance', 40, 518));
+        svg.appendChild(drawSectionLabel('MAIN SCRIPTS - Engagement Lifecycle', 40, 573));
+        svg.appendChild(drawSectionLabel('MAIN SCRIPTS - Agentic', 40, 628));
+        svg.appendChild(drawSectionLabel('MAIN SCRIPTS - Data Management', 40, 683));
+        svg.appendChild(drawSectionLabel('MAIN SCRIPTS - Reporting', 40, 738));
+        svg.appendChild(drawSectionLabel('MAIN SCRIPTS - Deployment', 40, 793));
+        svg.appendChild(drawSectionLabel('MAIN SCRIPTS - Utilities', 40, 848));
+        svg.appendChild(drawSectionDivider(505));
+      }
+
+      // Draw connections first
+      connections.forEach(conn => {
+        const path = drawConnection(conn);
+        if (path) svg.appendChild(path);
+      });
+
+      // Draw nodes
+      nodes.forEach(node => {
+        if (state.layers[node.layer]) {
+          svg.appendChild(drawNode(node));
+        }
+      });
+    }
+
+    function toggleLayer(layer, visible) {
+      state.layers[layer] = visible;
+      render();
+    }
+
+    function toggleConnection(type, visible) {
+      state.connections[type] = visible;
+      render();
+    }
+
+    function applyPreset(preset, btn) {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const presets = {
+        full: () => {
+          Object.keys(state.layers).forEach(k => state.layers[k] = true);
+          Object.keys(state.connections).forEach(k => state.connections[k] = true);
+        },
+        governance: () => {
+          Object.keys(state.layers).forEach(k => state.layers[k] = false);
+          state.layers.rules = true;
+          state.layers.libs = true;
+          state.layers.hooks = true;
+          Object.keys(state.connections).forEach(k => state.connections[k] = true);
+        },
+        hooks: () => {
+          Object.keys(state.layers).forEach(k => state.layers[k] = false);
+          state.layers.hooks = true;
+          state.layers.libs = true;
+          Object.keys(state.connections).forEach(k => state.connections[k] = true);
+        },
+        workflow: () => {
+          Object.keys(state.layers).forEach(k => state.layers[k] = false);
+          state.layers.rules = true;
+          state.layers.engagement = true;
+          state.layers.scripts = true;
+          state.layers.libs = true;
+          Object.keys(state.connections).forEach(k => state.connections[k] = true);
+        },
+        intel: () => {
+          Object.keys(state.layers).forEach(k => state.layers[k] = false);
+          state.layers.scripts = true;
+          state.layers.libs = true;
+          state.layers.engagement = true;
+          Object.keys(state.connections).forEach(k => state.connections[k] = true);
+        },
+        ops: () => {
+          Object.keys(state.layers).forEach(k => state.layers[k] = false);
+          state.layers.scripts = true;
+          state.layers.libs = true;
+          Object.keys(state.connections).forEach(k => state.connections[k] = true);
+        }
+      };
+
+      if (presets[preset]) presets[preset]();
+
+      // Update checkboxes
+      document.querySelectorAll('.layer-toggles input').forEach(input => {
+        const layer = input.onchange.toString().match(/toggleLayer\('(\w+)'/)[1];
+        input.checked = state.layers[layer];
+      });
+      document.querySelectorAll('.connection-toggles input').forEach(input => {
+        const type = input.onchange.toString().match(/toggleConnection\('(\w+)'/)[1];
+        input.checked = state.connections[type];
+      });
+
+      render();
+    }
+
+    function zoom(factor) {
+      currentScale *= factor;
+      currentScale = Math.max(0.5, Math.min(3, currentScale));
+      svg.style.transform = `scale(${currentScale})`;
+      svg.style.transformOrigin = 'top left';
+    }
+
+    function resetZoom() {
+      currentScale = 1;
+      svg.style.transform = 'scale(1)';
+    }
+
+    function openModal(node) {
+      currentNode = node;
+      document.getElementById('modalTitle').textContent = node.label;
+      document.getElementById('modalPath').textContent = node.path;
+      document.getElementById('modalInput').value = '';
+      document.getElementById('modalOverlay').classList.add('active');
+      document.getElementById('modalInput').focus();
+    }
+
+    function closeModal(event) {
+      if (event && event.target !== document.getElementById('modalOverlay')) return;
+      document.getElementById('modalOverlay').classList.remove('active');
+      currentNode = null;
+    }
+
+    function saveComment() {
+      const text = document.getElementById('modalInput').value.trim();
+      if (!text || !currentNode) return;
+
+      state.comments.push({
+        id: Date.now(),
+        target: currentNode.id,
+        targetLabel: currentNode.label,
+        targetPath: currentNode.path,
+        text: text
+      });
+
+      closeModal();
+      renderComments();
+      updatePrompt();
+      render();
+    }
+
+    function deleteComment(id) {
+      state.comments = state.comments.filter(c => c.id !== id);
+      renderComments();
+      updatePrompt();
+      render();
+    }
+
+    function renderComments() {
+      const list = document.getElementById('commentsList');
+      document.getElementById('commentCount').textContent = state.comments.length;
+
+      if (state.comments.length === 0) {
+        list.innerHTML = '<div style="color:#64748b; font-size:11px; padding:8px;">Click a component to add feedback...</div>';
+        return;
+      }
+
+      list.innerHTML = state.comments.map(c => `
+        <div class="comment-item">
+          <button class="delete-btn" onclick="deleteComment(${c.id})">×</button>
+          <div class="target">${c.targetLabel}</div>
+          <div class="file">${c.targetPath}</div>
+          <div class="text">${c.text}</div>
+        </div>
+      `).join('');
+    }
+
+    function updatePrompt() {
+      if (state.comments.length === 0) {
+        document.getElementById('promptText').textContent = 'Click components in the diagram to add feedback comments...';
+        return;
+      }
+
+      const visibleLayers = Object.entries(state.layers)
+        .filter(([k, v]) => v)
+        .map(([k]) => k);
+
+      let prompt = `This is the BRA (Battle Ready Agent) architecture with 57 scripts`;
+      if (visibleLayers.length < 6) {
+        prompt += `, focusing on: ${visibleLayers.join(', ')}`;
+      }
+      prompt += '.\n\nFeedback on specific components:\n';
+
+      state.comments.forEach(c => {
+        prompt += `\n**${c.targetLabel}** (${c.targetPath}):\n${c.text}\n`;
+      });
+
+      document.getElementById('promptText').textContent = prompt;
+    }
+
+    function copyPrompt() {
+      const text = document.getElementById('promptText').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy Prompt';
+          btn.classList.remove('copied');
+        }, 1500);
+      });
+    }
+
+    // Handle Enter key in modal
+    document.getElementById('modalInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.ctrlKey) {
+        saveComment();
+      }
+    });
+
+    // Initialize
+    render();
+  </script>
+  <footer style="text-align:center; padding:1rem 0; color:#8b949e; font-size:0.75rem; border-top:1px solid #30363d; margin-top:auto;">
+      GainSec LLC Copyright 2026
+  </footer>
+</body>
+</html>

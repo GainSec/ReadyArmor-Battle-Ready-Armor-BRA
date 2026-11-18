@@ -1,0 +1,42 @@
+{
+  "ui_pack_version": 2,
+  "meta": {
+    "name": "ops-grid",
+    "description": "Telemetry-dense operations cockpit",
+    "version": "2"
+  },
+  "theme_tokens": {
+    "option_label_max_chars": 30,
+    "accent": "$primary",
+    "muted": "$text-muted",
+    "panel_border_style": "round $primary",
+    "sidebar_width": 30
+  },
+  "layout": {
+    "kind": "ops-grid",
+    "density": "balanced"
+  },
+  "views": {
+    "splash": {
+      "show_quote": true
+    },
+    "engage": {
+      "sidebar_default_visible": true,
+      "options_density": "balanced",
+      "show_secondary_hints": true,
+      "status_bar_compact": false
+    },
+    "menu": {
+      "preview_density": "balanced"
+    }
+  },
+  "bindings": {},
+  "assets": {
+    "branding_title": "Battle Ready Armor",
+    "branding_subtitle": "Ops Grid",
+    "quotes": [
+      "Track every signal. Miss nothing."
+    ]
+  },
+  "hooks": {}
+}

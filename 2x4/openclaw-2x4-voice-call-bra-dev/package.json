@@ -1,0 +1,23 @@
+{
+  "name": "@openclaw/voice-call-bra",
+  "version": "2026.2.26",
+  "description": "OpenClaw voice-call BRA clone plugin",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:unit": "vitest run"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "0.34.48",
+    "ws": "^8.19.0",
+    "zod": "^4.3.6"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "devDependencies": {
+    "vitest": "^4.0.18"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "ui_pack_version": 2,
+  "meta": {
+    "name": "aim-console",
+    "description": "AIM-inspired buddy list console aesthetic",
+    "version": "2"
+  },
+  "theme_tokens": {
+    "option_label_max_chars": 26,
+    "accent": "#003399",
+    "muted": "#5a6d92",
+    "panel_border_style": "heavy #003399",
+    "sidebar_width": 42
+  },
+  "layout": {
+    "kind": "aim-classic",
+    "density": "balanced"
+  },
+  "views": {
+    "splash": {
+      "show_quote": true
+    },
+    "engage": {
+      "sidebar_default_visible": true,
+      "options_density": "balanced",
+      "show_secondary_hints": true,
+      "status_bar_compact": false
+    },
+    "menu": {
+      "preview_density": "balanced"
+    }
+  },
+  "bindings": {},
+  "assets": {
+    "branding_title": "Battle Ready Armor",
+    "branding_subtitle": "AIM Console",
+    "quotes": [
+      "Buddy systems win long campaigns."
+    ]
+  },
+  "hooks": {}
+}

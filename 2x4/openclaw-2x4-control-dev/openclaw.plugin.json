@@ -1,0 +1,30 @@
+{
+  "id": "openclaw-2x4-control",
+  "kind": "tools",
+  "uiHints": {
+    "bootsBaseUrl": {
+      "label": "Boots Base URL",
+      "help": "Boots API base URL used by bra2x4 gateway methods.",
+      "placeholder": "http://127.0.0.1:7090"
+    },
+    "bootsServiceToken": {
+      "label": "Boots 2x4 Service Token",
+      "sensitive": true,
+      "help": "Dedicated bearer token for protected /api/2x4 endpoints."
+    },
+    "timeoutMs": {
+      "label": "Request Timeout (ms)",
+      "advanced": true
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "bootsBaseUrl": { "type": "string" },
+      "bootsServiceToken": { "type": "string" },
+      "timeoutMs": { "type": "number", "minimum": 1000, "maximum": 120000 }
+    },
+    "required": []
+  }
+}

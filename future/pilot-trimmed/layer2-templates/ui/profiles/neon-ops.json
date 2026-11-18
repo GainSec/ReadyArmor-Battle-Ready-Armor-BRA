@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "name": "neon-ops",
+    "description": "Bold high-energy tactical style",
+    "version": "1"
+  },
+  "theme_tokens": {
+    "option_label_max_chars": 30,
+    "accent": "cyan",
+    "muted": "$text-muted",
+    "panel_border_style": "round cyan",
+    "sidebar_width": 30
+  },
+  "view_overrides": {
+    "sidebar_default_visible": true,
+    "options_density": "balanced",
+    "show_secondary_hints": true,
+    "menu_preview_density": "balanced",
+    "status_bar_compact": false
+  },
+  "assets": {
+    "branding_title": "Battle Ready Armor",
+    "branding_subtitle": "Neon Ops",
+    "quotes": [
+      "Find signal. Cut static."
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@openclaw/openclaw-2x4-control",
+  "version": "2026.3.2",
+  "description": "OpenClaw bounded 2x4 control-plane plugin",
+  "type": "module",
+  "dependencies": {
+    "@sinclair/typebox": "0.34.48"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "ui_pack_version": 2,
+  "meta": {
+    "name": "neon-tactical",
+    "description": "High-contrast tactical mission console",
+    "version": "2"
+  },
+  "theme_tokens": {
+    "option_label_max_chars": 32,
+    "accent": "cyan",
+    "muted": "$text-muted",
+    "panel_border_style": "double cyan",
+    "sidebar_width": 32
+  },
+  "layout": {
+    "kind": "neon-tactical",
+    "density": "balanced"
+  },
+  "views": {
+    "splash": {
+      "show_quote": true
+    },
+    "engage": {
+      "sidebar_default_visible": true,
+      "options_density": "balanced",
+      "show_secondary_hints": true,
+      "status_bar_compact": false
+    },
+    "menu": {
+      "preview_density": "balanced"
+    }
+  },
+  "bindings": {},
+  "assets": {
+    "branding_title": "Battle Ready Armor",
+    "branding_subtitle": "Neon Tactical",
+    "quotes": [
+      "Pressure reveals the true signal."
+    ]
+  },
+  "hooks": {}
+}

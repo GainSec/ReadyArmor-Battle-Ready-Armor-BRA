@@ -1,0 +1,2830 @@
+{
+  "product": "BRA",
+  "name": "Battle Ready Armor",
+  "tagline": "Govern security work. Retain the knowledge.",
+  "summary": "BRA runs directly on the host without requiring a separate VM or container. Registered SDK hooks connect managed tool requests to Body policy and engagement state. Supported model routing, tools, methods, browser/API access, terminal commands, and bounded assistant integrations share retained assessment records. Capture, finding acceptance, and reviewed promotion keep evidence and useful knowledge outside the model conversation.",
+  "accent": "#be5b37",
+  "chapters": [
+    {
+      "path": "README.md",
+      "label": "Overview"
+    },
+    {
+      "path": "docs/screenshots.md",
+      "label": "Product screenshots"
+    },
+    {
+      "path": "docs/ready-armor.md",
+      "label": "Ready Armor"
+    },
+    {
+      "path": "docs/control-in-depth.md",
+      "label": "Control in Depth"
+    },
+    {
+      "path": "docs/codex.md",
+      "label": "BRA Codex"
+    },
+    {
+      "path": "docs/features.md",
+      "label": "Features"
+    },
+    {
+      "path": "docs/architecture.md",
+      "label": "Architecture"
+    },
+    {
+      "path": "docs/end-to-end.md",
+      "label": "End-to-end flows"
+    },
+    {
+      "path": "docs/installation.md",
+      "label": "Installation"
+    },
+    {
+      "path": "docs/configuration.md",
+      "label": "Configuration"
+    },
+    {
+      "path": "docs/interfaces.md",
+      "label": "Interfaces and handoffs"
+    },
+    {
+      "path": "docs/operation.md",
+      "label": "Operation"
+    },
+    {
+      "path": "docs/governance.md",
+      "label": "Governance"
+    },
+    {
+      "path": "docs/privacy.md",
+      "label": "Privacy"
+    },
+    {
+      "path": "docs/evidence-pipeline.md",
+      "label": "Evidence pipeline"
+    },
+    {
+      "path": "docs/2x4.md",
+      "label": "2x4 integration"
+    },
+    {
+      "path": "docs/troubleshooting.md",
+      "label": "Troubleshooting"
+    },
+    {
+      "path": "docs/development.md",
+      "label": "Development"
+    },
+    {
+      "path": "docs/source-map.md",
+      "label": "Source map"
+    },
+    {
+      "path": "docs/api.md",
+      "label": "API reference"
+    },
+    {
+      "path": "docs/terms.md",
+      "label": "Product terms"
+    },
+    {
+      "path": "docs/README.md",
+      "label": "Documentation index"
+    },
+    {
+      "path": "docs/site.md",
+      "label": "Documentation site"
+    },
+    {
+      "path": "docs/source-index.md",
+      "label": "Source file index"
+    },
+    {
+      "path": "LICENSE.md",
+      "label": "License"
+    }
+  ],
+  "features": [
+    {
+      "title": "Scope-first engagement",
+      "description": "Define targets, exclusions, activity limits, and report requirements before work starts.",
+      "mechanism": "The wizard records scope and tokens. Body Bash scope checks inspect one recognized target in the original command.",
+      "source": [
+        {
+          "path": "boots/engage.py",
+          "symbol": "_run_wizard",
+          "line": 2444
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_write_scope_file",
+          "line": 2528
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_wizard_submit",
+          "line": 2727
+        },
+        {
+          "path": "body/layer1/lib/target_type_detector.py",
+          "symbol": "get_methodology_for_type",
+          "line": 116
+        },
+        {
+          "path": "body/layer1/lib/methodology_loader.py",
+          "symbol": "extract_phases",
+          "line": 60
+        },
+        {
+          "path": "body/layer1/lib/phase_invoker.py",
+          "symbol": "output_phase_context",
+          "line": 169
+        }
+      ]
+    },
+    {
+      "title": "Method-driven work",
+      "description": "Use target-specific phases, techniques, and deliverables.",
+      "mechanism": "Target mapping and phase extraction create the engagement context.",
+      "source": [
+        {
+          "path": "body/layer1/lib/target_type_detector.py",
+          "symbol": "get_methodology_for_type",
+          "line": 116
+        },
+        {
+          "path": "body/layer1/lib/methodology_loader.py",
+          "symbol": "extract_phases",
+          "line": 60
+        },
+        {
+          "path": "body/layer1/lib/phase_invoker.py",
+          "symbol": "output_phase_context",
+          "line": 169
+        }
+      ]
+    },
+    {
+      "title": "Explicit authority",
+      "description": "Inspect permissions outside the conversation.",
+      "mechanism": "Named token readers inspect their supported environment, file, or ROE sources. Invocation approvals use separate identity and retry matching.",
+      "source": [
+        {
+          "path": "body/layer1/lib/tokens.py",
+          "symbol": "has_token",
+          "line": 135
+        },
+        {
+          "path": "body/layer1/lib/tokens.py",
+          "symbol": "KNOWN_TOKENS",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "title": "Block, decide, continue",
+      "description": "Turn a denied request into a specific operator choice.",
+      "mechanism": "Typed blocks retain tool input and connect grants to matching retries.",
+      "source": [
+        {
+          "path": "head/bra/hooks/tool_approval_hook.py",
+          "symbol": "check_tool_approval_hook",
+          "line": 702
+        },
+        {
+          "path": "head/bra/core/approval.py",
+          "symbol": "grant_tool_execution",
+          "line": 603
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_process_approval_result",
+          "line": 1238
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "main",
+          "line": 1098
+        },
+        {
+          "path": "head/bra/core/approval.py",
+          "symbol": "grant_scope",
+          "line": 486
+        },
+        {
+          "path": "body/layer1/scripts/approve-target.py",
+          "symbol": "main",
+          "line": 456
+        }
+      ]
+    },
+    {
+      "title": "Control in Depth",
+      "description": "Apply multiple controls around consequential requests.",
+      "mechanism": "SDK adapters connect stop, approval, finding, command, and file checks.",
+      "source": [
+        {
+          "path": "head/bra/core/agent.py",
+          "symbol": "can_use_tool_func",
+          "line": 116
+        },
+        {
+          "path": "head/bra/hooks/registry.py",
+          "symbol": "build_hooks",
+          "line": 57
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "main",
+          "line": 1098
+        },
+        {
+          "path": "head/bra/hooks/file_hook.py",
+          "symbol": "_run_file_guard",
+          "line": 57
+        },
+        {
+          "path": "head/bra/hooks/file_hook.py",
+          "symbol": "_translate_response",
+          "line": 38
+        }
+      ]
+    },
+    {
+      "title": "Owned runtime paths",
+      "description": "Keep artifacts, approvals, queues, and records in their designated locations.",
+      "mechanism": "File policy and the runtime schema define permitted paths and writers.",
+      "source": [
+        {
+          "path": "body/layer1/hooks/file-guard.py",
+          "symbol": "_check_policy",
+          "line": 382
+        },
+        {
+          "path": "head/bra/core/bra_schema.py",
+          "symbol": "BRA_SCHEMA",
+          "line": 23
+        }
+      ]
+    },
+    {
+      "title": "Privacy aliases",
+      "description": "Keep the same target relationship across context and execution.",
+      "mechanism": "A local map connects word aliases with original values.",
+      "source": [
+        {
+          "path": "head/bra/anon/mapping.py",
+          "symbol": "AnonMap",
+          "line": 16
+        },
+        {
+          "path": "head/bra/anon/api.py",
+          "symbol": "mask",
+          "line": 66
+        }
+      ]
+    },
+    {
+      "title": "New-value review",
+      "description": "Review newly detected chat values before the message continues.",
+      "mechanism": "ANON-SCAN creates pending mapping decisions for the operator.",
+      "source": [
+        {
+          "path": "boots/engage.py",
+          "symbol": "_prepare_user_input_for_send",
+          "line": 773
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_resolve_anon_map_approval",
+          "line": 821
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_wizard_submit",
+          "line": 2727
+        },
+        {
+          "path": "boots/main.py",
+          "symbol": "anon_detect",
+          "line": 5879
+        },
+        {
+          "path": "head/bra/anon/ner_client.py",
+          "symbol": "NERClient",
+          "line": 121
+        }
+      ]
+    },
+    {
+      "title": "Local execution substitution",
+      "description": "Resolve mapped alias commands locally and retain masked output.",
+      "mechanism": "Original-command checks precede substitution. The guard executes locally and blocks duplicate SDK execution; no second target check evaluates the substituted command.",
+      "source": [
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_anon_intercept",
+          "line": 1003
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_anon_execute_and_capture",
+          "line": 888
+        },
+        {
+          "path": "head/bra/hooks/bash_hook.py",
+          "symbol": "pre_bash",
+          "line": 63
+        },
+        {
+          "path": "body/layer1/scripts/agentic-handler.py",
+          "symbol": "_generate_handoff",
+          "line": 555
+        }
+      ]
+    },
+    {
+      "title": "Evidence capture",
+      "description": "Retain the tool output that supports later records.",
+      "mechanism": "Capture identifiers, artifact paths, timestamps, and SHA-256 values enter the evidence index.",
+      "source": [
+        {
+          "path": "head/bra/hooks/post_hook.py",
+          "symbol": "post_tool",
+          "line": 511
+        },
+        {
+          "path": "head/bra/hooks/post_hook.py",
+          "symbol": "_append_evidence_index",
+          "line": 472
+        },
+        {
+          "path": "head/bra/core/capture_provenance.py",
+          "symbol": "append_record",
+          "line": 116
+        }
+      ]
+    },
+    {
+      "title": "Origin-aware provenance",
+      "description": "Connect a finding to the collection request that supports it.",
+      "mechanism": "Capture resolution ranks original evidence above derivative inspection results.",
+      "source": [
+        {
+          "path": "head/bra/core/runner.py",
+          "symbol": "_effective_provenance",
+          "line": 672
+        },
+        {
+          "path": "head/bra/core/runner.py",
+          "symbol": "_provenance_rank",
+          "line": 463
+        },
+        {
+          "path": "head/bra/core/runner.py",
+          "symbol": "_promote_origin_capture",
+          "line": 485
+        }
+      ]
+    },
+    {
+      "title": "Living assessment records",
+      "description": "Keep intelligence, investigation leads, and findings distinct.",
+      "mechanism": "Structured markers enter an event ledger and replay into their record streams.",
+      "source": [
+        {
+          "path": "head/bra/core/runner.py",
+          "symbol": "_parse_and_dispatch_text",
+          "line": 1917
+        },
+        {
+          "path": "head/bra/core/marker_events.py",
+          "symbol": "append_marker_event",
+          "line": 130
+        },
+        {
+          "path": "head/bra/core/notes_materializer.py",
+          "symbol": "replay_marker_events_to_notes",
+          "line": 128
+        }
+      ]
+    },
+    {
+      "title": "Finding documentation",
+      "description": "Create full issue records through a defined completion path.",
+      "mechanism": "Queue scaffolds and deterministic evidence sections combine with restricted narrative tasks.",
+      "source": [
+        {
+          "path": "head/bra/core/finding_enforcer.py",
+          "symbol": "enqueue_finding",
+          "line": 1353
+        },
+        {
+          "path": "head/bra/core/finding_enforcer.py",
+          "symbol": "write_context_file",
+          "line": 1375
+        },
+        {
+          "path": "head/bra/core/findings_materializer.py",
+          "symbol": "materialize_findings_from_events",
+          "line": 171
+        },
+        {
+          "path": "head/bra/core/finding_enforcer.py",
+          "symbol": "materialize_system_sections",
+          "line": 1060
+        },
+        {
+          "path": "head/bra/core/runner.py",
+          "symbol": "_run_findings_subagent",
+          "line": 968
+        },
+        {
+          "path": "head/bra/hooks/registry.py",
+          "symbol": "build_documentation_hooks",
+          "line": 27
+        },
+        {
+          "path": "head/bra/core/finding_enforcer.py",
+          "symbol": "merge_finding_output",
+          "line": 1639
+        },
+        {
+          "path": "head/bra/core/finding_enforcer.py",
+          "symbol": "validate_finding_record",
+          "line": 1482
+        }
+      ]
+    },
+    {
+      "title": "Finding recovery",
+      "description": "Continue documentation after interruption or worker stalls.",
+      "mechanism": "Queue reconciliation merges leftover outputs and supports a restricted main-agent handoff.",
+      "source": [
+        {
+          "path": "head/bra/core/runner.py",
+          "symbol": "run",
+          "line": 1309
+        },
+        {
+          "path": "head/bra/core/runner.py",
+          "symbol": "_run_findings_subagent",
+          "line": 968
+        },
+        {
+          "path": "head/bra/core/runner.py",
+          "symbol": "_build_findings_handoff_prompt",
+          "line": 1269
+        }
+      ]
+    },
+    {
+      "title": "Reports and disclosure",
+      "description": "Prepare executive, technical, vendor, and CNA outputs from engagement records.",
+      "mechanism": "Close-out coordinates metadata, selection, generation, enhancement, and lessons.",
+      "source": [
+        {
+          "path": "boots/engage.py",
+          "symbol": "_ensure_end_intake_ready",
+          "line": 2921
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_run_end_engagement",
+          "line": 2985
+        },
+        {
+          "path": "body/layer1/scripts/report-ready.py",
+          "symbol": "_generate_report",
+          "line": 519
+        },
+        {
+          "path": "body/layer1/scripts/disclose.py",
+          "symbol": "main",
+          "line": 781
+        }
+      ]
+    },
+    {
+      "title": "Reviewed knowledge growth",
+      "description": "Retain useful lessons in reusable methods, tools, skills, and patterns.",
+      "mechanism": "Incremental and retrospective proposals enter operator review before promotion.",
+      "source": [
+        {
+          "path": "body/layer1/scripts/self-improvement.py",
+          "symbol": "_analyze_phase_artifacts",
+          "line": 355
+        },
+        {
+          "path": "body/layer1/scripts/self-improvement.py",
+          "symbol": "_analyze_finding",
+          "line": 489
+        },
+        {
+          "path": "body/layer1/scripts/growth.py",
+          "symbol": "_build_proposal_document",
+          "line": 284
+        },
+        {
+          "path": "body/layer1/scripts/lessons-learned.py",
+          "symbol": "_run_post_lessons_automation",
+          "line": 605
+        },
+        {
+          "path": "body/layer1/lib/promotion.py",
+          "symbol": "_layer2_write_scope",
+          "line": 88
+        },
+        {
+          "path": "body/layer1/lib/promotion.py",
+          "symbol": "promote_from_pitch",
+          "line": 454
+        },
+        {
+          "path": "body/layer1/lib/promotion.py",
+          "symbol": "_route_section",
+          "line": 437
+        }
+      ]
+    },
+    {
+      "title": "Separate exception recommendations",
+      "description": "Keep reusable advice distinct from active engagement permission.",
+      "mechanism": "Override promotion writes recommendations instead of enabling live bypasses.",
+      "source": [
+        {
+          "path": "body/layer1/lib/promotion.py",
+          "symbol": "add_override",
+          "line": 374
+        },
+        {
+          "path": "head/bra/core/overrides.py",
+          "symbol": "OverrideManager",
+          "line": 20
+        }
+      ]
+    },
+    {
+      "title": "Local model routing",
+      "description": "Use a configured OpenAI-compatible inference backend.",
+      "mechanism": "The optional completion clamp and LiteLLM sidecar preserve the SDK hook path.",
+      "source": [
+        {
+          "path": "head/bra/core/agent.py",
+          "symbol": "_build_claude_runtime_env",
+          "line": 35
+        },
+        {
+          "path": "head/bra/proxy/litellm_sidecar.py",
+          "symbol": "ProxySidecar",
+          "line": 23
+        },
+        {
+          "path": "head/bra/proxy/clamp_proxy.py",
+          "symbol": "proxy",
+          "line": 65
+        },
+        {
+          "path": "head/bra/proxy/config.py",
+          "symbol": "build_litellm_config",
+          "line": 9
+        }
+      ]
+    },
+    {
+      "title": "Usage visibility",
+      "description": "Inspect query usage and engagement progress.",
+      "mechanism": "SDK result records supply token and cost summaries; telemetry reads engagement records.",
+      "source": [
+        {
+          "path": "head/bra/proxy/token_budget.py",
+          "symbol": "clamp_anthropic_messages_payload",
+          "line": 9
+        },
+        {
+          "path": "head/bra/core/token_usage.py",
+          "symbol": "log_sdk_token_usage",
+          "line": 76
+        },
+        {
+          "path": "head/bra/core/token_usage.py",
+          "symbol": "summarize_token_usage",
+          "line": 109
+        },
+        {
+          "path": "boots/telemetry.py",
+          "symbol": "update_cumulative_stats",
+          "line": 275
+        },
+        {
+          "path": "boots/telemetry.py",
+          "symbol": "_compute_xp",
+          "line": 330
+        }
+      ]
+    },
+    {
+      "title": "Bounded external assistance",
+      "description": "Expose selected status and action functions to an optional assistant.",
+      "mechanism": "Separate service authentication, named resources, and expiring takeover leases govern the interface.",
+      "source": [
+        {
+          "path": "boots/main.py",
+          "symbol": "verify_2x4_service_token",
+          "line": 1258
+        },
+        {
+          "path": "boots/main.py",
+          "symbol": "get_2x4_file",
+          "line": 7482
+        },
+        {
+          "path": "boots/main.py",
+          "symbol": "get_2x4_log",
+          "line": 7511
+        },
+        {
+          "path": "2x4/openclaw-2x4-control-dev/index.ts",
+          "symbol": "register",
+          "line": 114
+        },
+        {
+          "path": "boots/takeover.py",
+          "symbol": "confirm_takeover",
+          "line": 80
+        },
+        {
+          "path": "boots/takeover.py",
+          "symbol": "dispatch_action_to_engage",
+          "line": 331
+        },
+        {
+          "path": "boots/main.py",
+          "symbol": "post_2x4_engage_action",
+          "line": 7572
+        }
+      ]
+    },
+    {
+      "title": "Voice integration",
+      "description": "Route supported call actions through the configured provider.",
+      "mechanism": "OpenClaw gateway calls or an installed Hermes plugin connect to the voice runtime.",
+      "source": [
+        {
+          "path": "boots/engage.py",
+          "symbol": "_invoke_voicecall_bra",
+          "line": 411
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_invoke_voicecall_bra_gateway_sync",
+          "line": 289
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_invoke_voicecall_bra_hermes_sync",
+          "line": 348
+        }
+      ]
+    },
+    {
+      "title": "Managed lifecycle",
+      "description": "Resume, stop, package, back up, restore, or reset through explicit controls.",
+      "mechanism": "Managed tasks, SDK process cleanup, durable records, and lifecycle scripts retain the engagement context.",
+      "source": [
+        {
+          "path": "head/bra/hooks/killswitch.py",
+          "symbol": "check_killswitch_hook",
+          "line": 64
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "stop_agent",
+          "line": 1559
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_terminate_all_agent_subprocesses",
+          "line": 1733
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "broadcast",
+          "line": 581
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "get_state",
+          "line": 679
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "resume_agent",
+          "line": 1048
+        },
+        {
+          "path": "boots/main.py",
+          "symbol": "websocket_engage",
+          "line": 7374
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_run_packup",
+          "line": 3193
+        },
+        {
+          "path": "body/layer1/scripts/reset.py",
+          "symbol": "main",
+          "line": 547
+        },
+        {
+          "path": "body/layer1/scripts/backup.py",
+          "symbol": "main",
+          "line": 439
+        },
+        {
+          "path": "body/layer1/scripts/restore.py",
+          "symbol": "main",
+          "line": 226
+        }
+      ]
+    }
+  ],
+  "flows": [
+    {
+      "id": "engagement",
+      "title": "Scope to governed work",
+      "summary": "Turn an assessment request into a method-driven agent session with explicit scope and permission state.",
+      "steps": [
+        {
+          "title": "Receive scope",
+          "detail": "The engagement router passes scope and wizard actions to the managed lifecycle.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "_run_wizard",
+              "line": 2444
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_write_scope_file",
+              "line": 2528
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_wizard_submit",
+              "line": 2727
+            }
+          ]
+        },
+        {
+          "title": "Review privacy",
+          "detail": "Detection and the selected scope mode determine the operator mapping review.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "_wizard_submit",
+              "line": 2727
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "anon_detect",
+              "line": 5879
+            },
+            {
+              "path": "head/bra/anon/ner_client.py",
+              "symbol": "NERClient",
+              "line": 121
+            }
+          ]
+        },
+        {
+          "title": "Write scope",
+          "detail": "The scope writer records targets, exclusions, authorization, and activity settings.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "_run_wizard",
+              "line": 2444
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_write_scope_file",
+              "line": 2528
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_wizard_submit",
+              "line": 2727
+            }
+          ]
+        },
+        {
+          "title": "Record tokens",
+          "detail": "Selected capabilities and modes become engagement approval state.",
+          "source": [
+            {
+              "path": "body/layer1/lib/tokens.py",
+              "symbol": "has_token",
+              "line": 135
+            },
+            {
+              "path": "body/layer1/lib/tokens.py",
+              "symbol": "KNOWN_TOKENS",
+              "line": 45
+            }
+          ]
+        },
+        {
+          "title": "Check readiness",
+          "detail": "Readiness routines inspect the structure, scripts, tools, and scope.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "_run_wizard",
+              "line": 2444
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_write_scope_file",
+              "line": 2528
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_wizard_submit",
+              "line": 2727
+            }
+          ]
+        },
+        {
+          "title": "Select the method",
+          "detail": "Target mapping chooses the supported method family and its phases.",
+          "source": [
+            {
+              "path": "body/layer1/lib/target_type_detector.py",
+              "symbol": "get_methodology_for_type",
+              "line": 116
+            },
+            {
+              "path": "body/layer1/lib/methodology_loader.py",
+              "symbol": "extract_phases",
+              "line": 60
+            },
+            {
+              "path": "body/layer1/lib/phase_invoker.py",
+              "symbol": "output_phase_context",
+              "line": 169
+            }
+          ]
+        },
+        {
+          "title": "Build context",
+          "detail": "Phase context and host context supply the operational instructions.",
+          "source": [
+            {
+              "path": "body/layer1/lib/target_type_detector.py",
+              "symbol": "get_methodology_for_type",
+              "line": 116
+            },
+            {
+              "path": "body/layer1/lib/methodology_loader.py",
+              "symbol": "extract_phases",
+              "line": 60
+            },
+            {
+              "path": "body/layer1/lib/phase_invoker.py",
+              "symbol": "output_phase_context",
+              "line": 169
+            },
+            {
+              "path": "head/bra/core/agent.py",
+              "symbol": "run_agent",
+              "line": 80
+            },
+            {
+              "path": "head/bra/core/agent.py",
+              "symbol": "_build_claude_runtime_env",
+              "line": 35
+            }
+          ]
+        },
+        {
+          "title": "Prepare model routing",
+          "detail": "The manager prepares the SDK connection and optional local proxy.",
+          "source": [
+            {
+              "path": "head/bra/core/agent.py",
+              "symbol": "run_agent",
+              "line": 80
+            },
+            {
+              "path": "head/bra/core/agent.py",
+              "symbol": "_build_claude_runtime_env",
+              "line": 35
+            },
+            {
+              "path": "head/bra/proxy/litellm_sidecar.py",
+              "symbol": "ProxySidecar",
+              "line": 23
+            },
+            {
+              "path": "head/bra/proxy/clamp_proxy.py",
+              "symbol": "proxy",
+              "line": 65
+            },
+            {
+              "path": "head/bra/proxy/config.py",
+              "symbol": "build_litellm_config",
+              "line": 9
+            }
+          ]
+        },
+        {
+          "title": "Register controls",
+          "detail": "The SDK wrapper installs the policy hooks and engagement-local state paths.",
+          "source": [
+            {
+              "path": "head/bra/core/agent.py",
+              "symbol": "run_agent",
+              "line": 80
+            },
+            {
+              "path": "head/bra/core/agent.py",
+              "symbol": "_build_claude_runtime_env",
+              "line": 35
+            },
+            {
+              "path": "head/bra/core/agent.py",
+              "symbol": "can_use_tool_func",
+              "line": 116
+            },
+            {
+              "path": "head/bra/hooks/registry.py",
+              "symbol": "build_hooks",
+              "line": 57
+            }
+          ]
+        },
+        {
+          "title": "Run and observe",
+          "detail": "The runner processes the turn while managed events update the operator interface.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "broadcast",
+              "line": 581
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "get_state",
+              "line": 679
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "resume_agent",
+              "line": 1048
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "websocket_engage",
+              "line": 7374
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "evidence",
+      "title": "Alias command to documented finding",
+      "summary": "Trace original-command checks, local alias substitution, masked capture, and finding record acceptance.",
+      "steps": [
+        {
+          "title": "Use the known alias",
+          "detail": "The agent treats a mapped scope value as a usable target for the full engagement.",
+          "source": [
+            {
+              "path": "body/layer1/scripts/agentic-handler.py",
+              "symbol": "_generate_handoff",
+              "line": 555
+            }
+          ]
+        },
+        {
+          "title": "Evaluate the tool request",
+          "detail": "Approval matching determines whether the proposed invocation can continue.",
+          "source": [
+            {
+              "path": "head/bra/hooks/tool_approval_hook.py",
+              "symbol": "check_tool_approval_hook",
+              "line": 702
+            },
+            {
+              "path": "head/bra/core/approval.py",
+              "symbol": "grant_tool_execution",
+              "line": 603
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_process_approval_result",
+              "line": 1238
+            }
+          ]
+        },
+        {
+          "title": "Check command policy",
+          "detail": "Recognized activity, target, operation, path, and scan predicates inspect the original command. A word-only alias can produce no extracted target.",
+          "source": [
+            {
+              "path": "body/layer1/hooks/bash-guard.py",
+              "symbol": "main",
+              "line": 1098
+            }
+          ]
+        },
+        {
+          "title": "Resolve local values",
+          "detail": "The local guard substitutes known aliases after original-command checks. It does not repeat target validation after substitution.",
+          "source": [
+            {
+              "path": "body/layer1/hooks/bash-guard.py",
+              "symbol": "_anon_intercept",
+              "line": 1003
+            },
+            {
+              "path": "body/layer1/hooks/bash-guard.py",
+              "symbol": "_anon_execute_and_capture",
+              "line": 888
+            },
+            {
+              "path": "head/bra/hooks/bash_hook.py",
+              "symbol": "pre_bash",
+              "line": 63
+            }
+          ]
+        },
+        {
+          "title": "Capture masked output",
+          "detail": "The intercept saves masked output and capture context, then blocks duplicate SDK execution.",
+          "source": [
+            {
+              "path": "body/layer1/hooks/bash-guard.py",
+              "symbol": "_anon_intercept",
+              "line": 1003
+            },
+            {
+              "path": "body/layer1/hooks/bash-guard.py",
+              "symbol": "_anon_execute_and_capture",
+              "line": 888
+            },
+            {
+              "path": "head/bra/hooks/bash_hook.py",
+              "symbol": "pre_bash",
+              "line": 63
+            }
+          ]
+        },
+        {
+          "title": "Index the evidence",
+          "detail": "The capture index retains identifiers, artifact paths, time, and hash information.",
+          "source": [
+            {
+              "path": "head/bra/hooks/post_hook.py",
+              "symbol": "post_tool",
+              "line": 511
+            },
+            {
+              "path": "head/bra/hooks/post_hook.py",
+              "symbol": "_append_evidence_index",
+              "line": 472
+            },
+            {
+              "path": "head/bra/core/capture_provenance.py",
+              "symbol": "append_record",
+              "line": 116
+            }
+          ]
+        },
+        {
+          "title": "Resolve the observation",
+          "detail": "The runner selects supporting provenance, preferring originating evidence.",
+          "source": [
+            {
+              "path": "head/bra/core/runner.py",
+              "symbol": "_effective_provenance",
+              "line": 672
+            },
+            {
+              "path": "head/bra/core/runner.py",
+              "symbol": "_provenance_rank",
+              "line": 463
+            },
+            {
+              "path": "head/bra/core/runner.py",
+              "symbol": "_promote_origin_capture",
+              "line": 485
+            }
+          ]
+        },
+        {
+          "title": "Write the marker event",
+          "detail": "Normalized marker fields enter the replayable event ledger.",
+          "source": [
+            {
+              "path": "head/bra/core/runner.py",
+              "symbol": "_parse_and_dispatch_text",
+              "line": 1917
+            },
+            {
+              "path": "head/bra/core/marker_events.py",
+              "symbol": "append_marker_event",
+              "line": 130
+            },
+            {
+              "path": "head/bra/core/notes_materializer.py",
+              "symbol": "replay_marker_events_to_notes",
+              "line": 128
+            }
+          ]
+        },
+        {
+          "title": "Create the finding scaffold",
+          "detail": "The enforcer adds the finding to its queue and creates its record structure.",
+          "source": [
+            {
+              "path": "head/bra/core/finding_enforcer.py",
+              "symbol": "enqueue_finding",
+              "line": 1353
+            },
+            {
+              "path": "head/bra/core/finding_enforcer.py",
+              "symbol": "write_context_file",
+              "line": 1375
+            },
+            {
+              "path": "head/bra/core/findings_materializer.py",
+              "symbol": "materialize_findings_from_events",
+              "line": 171
+            }
+          ]
+        },
+        {
+          "title": "Derive evidence sections",
+          "detail": "System routines supply artifact references, hashes, reproduction details, and proof support files.",
+          "source": [
+            {
+              "path": "head/bra/core/finding_enforcer.py",
+              "symbol": "materialize_system_sections",
+              "line": 1060
+            }
+          ]
+        },
+        {
+          "title": "Complete analysis",
+          "detail": "A restricted documentation task supplies the remaining narrative fields.",
+          "source": [
+            {
+              "path": "head/bra/core/runner.py",
+              "symbol": "_run_findings_subagent",
+              "line": 968
+            },
+            {
+              "path": "head/bra/hooks/registry.py",
+              "symbol": "build_documentation_hooks",
+              "line": 27
+            },
+            {
+              "path": "head/bra/core/finding_enforcer.py",
+              "symbol": "merge_finding_output",
+              "line": 1639
+            },
+            {
+              "path": "head/bra/core/finding_enforcer.py",
+              "symbol": "validate_finding_record",
+              "line": 1482
+            }
+          ]
+        },
+        {
+          "title": "Validate and review",
+          "detail": "The enforcer checks record requirements and applicable evidence references for operator inspection.",
+          "source": [
+            {
+              "path": "head/bra/core/runner.py",
+              "symbol": "_run_findings_subagent",
+              "line": 968
+            },
+            {
+              "path": "head/bra/hooks/registry.py",
+              "symbol": "build_documentation_hooks",
+              "line": 27
+            },
+            {
+              "path": "head/bra/core/finding_enforcer.py",
+              "symbol": "merge_finding_output",
+              "line": 1639
+            },
+            {
+              "path": "head/bra/core/finding_enforcer.py",
+              "symbol": "validate_finding_record",
+              "line": 1482
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "growth",
+      "title": "Finding to retained doctrine",
+      "summary": "Prepare deliverables, derive useful lessons, and promote accepted values through a separate review boundary.",
+      "steps": [
+        {
+          "title": "Collect close-out metadata",
+          "detail": "End-intake supplies the fields required for the selected report types.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "_ensure_end_intake_ready",
+              "line": 2921
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_run_end_engagement",
+              "line": 2985
+            },
+            {
+              "path": "body/layer1/scripts/report-ready.py",
+              "symbol": "_generate_report",
+              "line": 519
+            },
+            {
+              "path": "body/layer1/scripts/disclose.py",
+              "symbol": "main",
+              "line": 781
+            }
+          ]
+        },
+        {
+          "title": "Select findings",
+          "detail": "The optional selection step records which finding identifiers enter the report set.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "_ensure_end_intake_ready",
+              "line": 2921
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_run_end_engagement",
+              "line": 2985
+            },
+            {
+              "path": "body/layer1/scripts/report-ready.py",
+              "symbol": "_generate_report",
+              "line": 519
+            },
+            {
+              "path": "body/layer1/scripts/disclose.py",
+              "symbol": "main",
+              "line": 781
+            }
+          ]
+        },
+        {
+          "title": "Generate report structure",
+          "detail": "Statistics and report routines read the structured engagement records.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "_ensure_end_intake_ready",
+              "line": 2921
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_run_end_engagement",
+              "line": 2985
+            },
+            {
+              "path": "body/layer1/scripts/report-ready.py",
+              "symbol": "_generate_report",
+              "line": 519
+            },
+            {
+              "path": "body/layer1/scripts/disclose.py",
+              "symbol": "main",
+              "line": 781
+            }
+          ]
+        },
+        {
+          "title": "Prepare disclosure outputs",
+          "detail": "Vendor, CNA, and disclosure forms receive the selected content.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "_ensure_end_intake_ready",
+              "line": 2921
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_run_end_engagement",
+              "line": 2985
+            },
+            {
+              "path": "body/layer1/scripts/report-ready.py",
+              "symbol": "_generate_report",
+              "line": 519
+            },
+            {
+              "path": "body/layer1/scripts/disclose.py",
+              "symbol": "main",
+              "line": 781
+            }
+          ]
+        },
+        {
+          "title": "Enhance and inspect",
+          "detail": "Narrative enhancement and placeholder checks expose retry or skip choices.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "_ensure_end_intake_ready",
+              "line": 2921
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_run_end_engagement",
+              "line": 2985
+            },
+            {
+              "path": "body/layer1/scripts/report-ready.py",
+              "symbol": "_generate_report",
+              "line": 519
+            },
+            {
+              "path": "body/layer1/scripts/disclose.py",
+              "symbol": "main",
+              "line": 781
+            }
+          ]
+        },
+        {
+          "title": "Record lessons",
+          "detail": "Lessons routines combine findings, leads, review gaps, and assessment context.",
+          "source": [
+            {
+              "path": "body/layer1/scripts/self-improvement.py",
+              "symbol": "_analyze_phase_artifacts",
+              "line": 355
+            },
+            {
+              "path": "body/layer1/scripts/self-improvement.py",
+              "symbol": "_analyze_finding",
+              "line": 489
+            },
+            {
+              "path": "body/layer1/scripts/growth.py",
+              "symbol": "_build_proposal_document",
+              "line": 284
+            },
+            {
+              "path": "body/layer1/scripts/lessons-learned.py",
+              "symbol": "_run_post_lessons_automation",
+              "line": 605
+            }
+          ]
+        },
+        {
+          "title": "Derive candidates",
+          "detail": "Growth and incremental improvement write compact proposals from the recorded work.",
+          "source": [
+            {
+              "path": "body/layer1/scripts/self-improvement.py",
+              "symbol": "_analyze_phase_artifacts",
+              "line": 355
+            },
+            {
+              "path": "body/layer1/scripts/self-improvement.py",
+              "symbol": "_analyze_finding",
+              "line": 489
+            },
+            {
+              "path": "body/layer1/scripts/growth.py",
+              "symbol": "_build_proposal_document",
+              "line": 284
+            },
+            {
+              "path": "body/layer1/scripts/lessons-learned.py",
+              "symbol": "_run_post_lessons_automation",
+              "line": 605
+            }
+          ]
+        },
+        {
+          "title": "Review the pitch",
+          "detail": "The operator marks candidates as approved, denied, or deferred.",
+          "source": [
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "_layer2_write_scope",
+              "line": 88
+            },
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "promote_from_pitch",
+              "line": 454
+            },
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "_route_section",
+              "line": 437
+            }
+          ]
+        },
+        {
+          "title": "Open promotion scope",
+          "detail": "A temporary template-write token surrounds supported promotion work.",
+          "source": [
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "_layer2_write_scope",
+              "line": 88
+            },
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "promote_from_pitch",
+              "line": 454
+            },
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "_route_section",
+              "line": 437
+            }
+          ]
+        },
+        {
+          "title": "Route the accepted value",
+          "detail": "Promotion updates skills, tool knowledge, method drafts, attack patterns, or override recommendations.",
+          "source": [
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "_layer2_write_scope",
+              "line": 88
+            },
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "promote_from_pitch",
+              "line": 454
+            },
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "_route_section",
+              "line": 437
+            },
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "add_override",
+              "line": 374
+            },
+            {
+              "path": "head/bra/core/overrides.py",
+              "symbol": "OverrideManager",
+              "line": 20
+            }
+          ]
+        },
+        {
+          "title": "Record the result",
+          "detail": "Processed items receive implementation status and the temporary token is removed.",
+          "source": [
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "_layer2_write_scope",
+              "line": 88
+            },
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "promote_from_pitch",
+              "line": 454
+            },
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "_route_section",
+              "line": 437
+            }
+          ]
+        },
+        {
+          "title": "Reuse with fresh authority",
+          "detail": "A later engagement consults the retained knowledge with its own scope, permissions, and evidence.",
+          "source": [
+            {
+              "path": "body/layer1/lib/target_type_detector.py",
+              "symbol": "get_methodology_for_type",
+              "line": 116
+            },
+            {
+              "path": "body/layer1/lib/methodology_loader.py",
+              "symbol": "extract_phases",
+              "line": 60
+            },
+            {
+              "path": "body/layer1/lib/phase_invoker.py",
+              "symbol": "output_phase_context",
+              "line": 169
+            },
+            {
+              "path": "body/layer1/lib/promotion.py",
+              "symbol": "add_override",
+              "line": 374
+            },
+            {
+              "path": "head/bra/core/overrides.py",
+              "symbol": "OverrideManager",
+              "line": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "external-control",
+      "title": "Leased external assistance",
+      "summary": "Connect an optional assistant to bounded engagement resources and existing action routing.",
+      "steps": [
+        {
+          "title": "Authenticate the service",
+          "detail": "The external client supplies the separate 2x4 service token.",
+          "source": [
+            {
+              "path": "boots/main.py",
+              "symbol": "verify_2x4_service_token",
+              "line": 1258
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "get_2x4_file",
+              "line": 7482
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "get_2x4_log",
+              "line": 7511
+            },
+            {
+              "path": "2x4/openclaw-2x4-control-dev/index.ts",
+              "symbol": "register",
+              "line": 114
+            }
+          ]
+        },
+        {
+          "title": "Read a bounded summary",
+          "detail": "The API supplies the permitted engagement snapshot.",
+          "source": [
+            {
+              "path": "boots/main.py",
+              "symbol": "verify_2x4_service_token",
+              "line": 1258
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "get_2x4_file",
+              "line": 7482
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "get_2x4_log",
+              "line": 7511
+            },
+            {
+              "path": "2x4/openclaw-2x4-control-dev/index.ts",
+              "symbol": "register",
+              "line": 114
+            }
+          ]
+        },
+        {
+          "title": "Select a named resource",
+          "detail": "File and log routes accept allowed identifiers rather than unrestricted paths.",
+          "source": [
+            {
+              "path": "boots/main.py",
+              "symbol": "verify_2x4_service_token",
+              "line": 1258
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "get_2x4_file",
+              "line": 7482
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "get_2x4_log",
+              "line": 7511
+            },
+            {
+              "path": "2x4/openclaw-2x4-control-dev/index.ts",
+              "symbol": "register",
+              "line": 114
+            }
+          ]
+        },
+        {
+          "title": "Request takeover",
+          "detail": "The controller opens a limited confirmation period.",
+          "source": [
+            {
+              "path": "boots/takeover.py",
+              "symbol": "confirm_takeover",
+              "line": 80
+            },
+            {
+              "path": "boots/takeover.py",
+              "symbol": "dispatch_action_to_engage",
+              "line": 331
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "post_2x4_engage_action",
+              "line": 7572
+            }
+          ]
+        },
+        {
+          "title": "Confirm the request",
+          "detail": "A valid confirmation creates the current control lease.",
+          "source": [
+            {
+              "path": "boots/takeover.py",
+              "symbol": "confirm_takeover",
+              "line": 80
+            },
+            {
+              "path": "boots/takeover.py",
+              "symbol": "dispatch_action_to_engage",
+              "line": 331
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "post_2x4_engage_action",
+              "line": 7572
+            }
+          ]
+        },
+        {
+          "title": "Present the lease",
+          "detail": "Action requests supply the active lease identifier.",
+          "source": [
+            {
+              "path": "boots/takeover.py",
+              "symbol": "confirm_takeover",
+              "line": 80
+            },
+            {
+              "path": "boots/takeover.py",
+              "symbol": "dispatch_action_to_engage",
+              "line": 331
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "post_2x4_engage_action",
+              "line": 7572
+            }
+          ]
+        },
+        {
+          "title": "Parse the action",
+          "detail": "The controller accepts supported structured actions and denies scope mutation approvals.",
+          "source": [
+            {
+              "path": "boots/takeover.py",
+              "symbol": "confirm_takeover",
+              "line": 80
+            },
+            {
+              "path": "boots/takeover.py",
+              "symbol": "dispatch_action_to_engage",
+              "line": 331
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "post_2x4_engage_action",
+              "line": 7572
+            }
+          ]
+        },
+        {
+          "title": "Use engagement routing",
+          "detail": "Accepted actions enter the existing message router.",
+          "source": [
+            {
+              "path": "boots/takeover.py",
+              "symbol": "confirm_takeover",
+              "line": 80
+            },
+            {
+              "path": "boots/takeover.py",
+              "symbol": "dispatch_action_to_engage",
+              "line": 331
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "post_2x4_engage_action",
+              "line": 7572
+            }
+          ]
+        },
+        {
+          "title": "Delegate call control",
+          "detail": "Supported call actions select the configured OpenClaw or installed Hermes integration.",
+          "source": [
+            {
+              "path": "boots/engage.py",
+              "symbol": "_invoke_voicecall_bra",
+              "line": 411
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_invoke_voicecall_bra_gateway_sync",
+              "line": 289
+            },
+            {
+              "path": "boots/engage.py",
+              "symbol": "_invoke_voicecall_bra_hermes_sync",
+              "line": 348
+            }
+          ]
+        },
+        {
+          "title": "Return to standby",
+          "detail": "Expiry or stand-down invalidates the lease and resets active takeover state.",
+          "source": [
+            {
+              "path": "boots/takeover.py",
+              "symbol": "confirm_takeover",
+              "line": 80
+            },
+            {
+              "path": "boots/takeover.py",
+              "symbol": "dispatch_action_to_engage",
+              "line": 331
+            },
+            {
+              "path": "boots/main.py",
+              "symbol": "post_2x4_engage_action",
+              "line": 7572
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "architecture": {
+    "nodes": [
+      {
+        "id": "operator",
+        "title": "Operator",
+        "role": "Defines scope and reviews consequential decisions.",
+        "layer": "interaction",
+        "source": [
+          {
+            "path": "boots/engage.py",
+            "symbol": "_run_wizard",
+            "line": 2444
+          },
+          {
+            "path": "boots/engage.py",
+            "symbol": "_write_scope_file",
+            "line": 2528
+          },
+          {
+            "path": "boots/engage.py",
+            "symbol": "_wizard_submit",
+            "line": 2727
+          }
+        ]
+      },
+      {
+        "id": "boots",
+        "title": "Boots interface",
+        "role": "HTTP, browser events, decision cards, and lifecycle routing.",
+        "layer": "interaction",
+        "source": [
+          {
+            "path": "boots/engage.py",
+            "symbol": "broadcast",
+            "line": 581
+          },
+          {
+            "path": "boots/engage.py",
+            "symbol": "get_state",
+            "line": 679
+          },
+          {
+            "path": "boots/engage.py",
+            "symbol": "resume_agent",
+            "line": 1048
+          },
+          {
+            "path": "boots/main.py",
+            "symbol": "websocket_engage",
+            "line": 7374
+          }
+        ]
+      },
+      {
+        "id": "external",
+        "title": "2x4 service",
+        "role": "Bounded status, calls, and leased actions.",
+        "layer": "interaction",
+        "source": [
+          {
+            "path": "boots/main.py",
+            "symbol": "verify_2x4_service_token",
+            "line": 1258
+          },
+          {
+            "path": "boots/main.py",
+            "symbol": "get_2x4_file",
+            "line": 7482
+          },
+          {
+            "path": "boots/main.py",
+            "symbol": "get_2x4_log",
+            "line": 7511
+          },
+          {
+            "path": "2x4/openclaw-2x4-control-dev/index.ts",
+            "symbol": "register",
+            "line": 114
+          }
+        ]
+      },
+      {
+        "id": "runner",
+        "title": "Head runtime",
+        "role": "Managed agent turns, continuation, markers, and finding work.",
+        "layer": "runtime",
+        "source": [
+          {
+            "path": "head/bra/core/agent.py",
+            "symbol": "run_agent",
+            "line": 80
+          },
+          {
+            "path": "head/bra/core/agent.py",
+            "symbol": "_build_claude_runtime_env",
+            "line": 35
+          }
+        ]
+      },
+      {
+        "id": "model",
+        "title": "Model connection",
+        "role": "SDK connection with optional OpenAI-compatible routing.",
+        "layer": "runtime",
+        "source": [
+          {
+            "path": "head/bra/core/agent.py",
+            "symbol": "_build_claude_runtime_env",
+            "line": 35
+          },
+          {
+            "path": "head/bra/proxy/litellm_sidecar.py",
+            "symbol": "ProxySidecar",
+            "line": 23
+          },
+          {
+            "path": "head/bra/proxy/clamp_proxy.py",
+            "symbol": "proxy",
+            "line": 65
+          },
+          {
+            "path": "head/bra/proxy/config.py",
+            "symbol": "build_litellm_config",
+            "line": 9
+          }
+        ]
+      },
+      {
+        "id": "hooks",
+        "title": "Policy adapters",
+        "role": "Connect SDK requests to the relevant body checks.",
+        "layer": "control",
+        "source": [
+          {
+            "path": "head/bra/core/agent.py",
+            "symbol": "can_use_tool_func",
+            "line": 116
+          },
+          {
+            "path": "head/bra/hooks/registry.py",
+            "symbol": "build_hooks",
+            "line": 57
+          }
+        ]
+      },
+      {
+        "id": "policy",
+        "title": "Body policy",
+        "role": "Command, file, target, stop, and operation decisions.",
+        "layer": "control",
+        "source": [
+          {
+            "path": "body/layer1/hooks/bash-guard.py",
+            "symbol": "main",
+            "line": 1098
+          }
+        ]
+      },
+      {
+        "id": "authority",
+        "title": "Authority state",
+        "role": "Scope, approval records, target levels, and modes.",
+        "layer": "state",
+        "source": [
+          {
+            "path": "body/layer1/lib/tokens.py",
+            "symbol": "has_token",
+            "line": 135
+          },
+          {
+            "path": "body/layer1/lib/tokens.py",
+            "symbol": "KNOWN_TOKENS",
+            "line": 45
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "title": "Privacy map",
+        "role": "Aliases, local substitution, and operator conversion.",
+        "layer": "state",
+        "source": [
+          {
+            "path": "head/bra/anon/mapping.py",
+            "symbol": "AnonMap",
+            "line": 16
+          },
+          {
+            "path": "head/bra/anon/api.py",
+            "symbol": "mask",
+            "line": 66
+          }
+        ]
+      },
+      {
+        "id": "capture",
+        "title": "Capture index",
+        "role": "Tool results, identifiers, artifact paths, and hashes.",
+        "layer": "evidence",
+        "source": [
+          {
+            "path": "head/bra/hooks/post_hook.py",
+            "symbol": "post_tool",
+            "line": 511
+          },
+          {
+            "path": "head/bra/hooks/post_hook.py",
+            "symbol": "_append_evidence_index",
+            "line": 472
+          },
+          {
+            "path": "head/bra/core/capture_provenance.py",
+            "symbol": "append_record",
+            "line": 116
+          }
+        ]
+      },
+      {
+        "id": "materializers",
+        "title": "Record materializers",
+        "role": "Replay markers into notes and finding sections.",
+        "layer": "evidence",
+        "source": [
+          {
+            "path": "head/bra/core/runner.py",
+            "symbol": "_parse_and_dispatch_text",
+            "line": 1917
+          },
+          {
+            "path": "head/bra/core/marker_events.py",
+            "symbol": "append_marker_event",
+            "line": 130
+          },
+          {
+            "path": "head/bra/core/notes_materializer.py",
+            "symbol": "replay_marker_events_to_notes",
+            "line": 128
+          }
+        ]
+      },
+      {
+        "id": "findings",
+        "title": "Finding enforcer",
+        "role": "Pending queue, analysis work, validation, and recovery.",
+        "layer": "evidence",
+        "source": [
+          {
+            "path": "head/bra/core/runner.py",
+            "symbol": "_run_findings_subagent",
+            "line": 968
+          },
+          {
+            "path": "head/bra/hooks/registry.py",
+            "symbol": "build_documentation_hooks",
+            "line": 27
+          },
+          {
+            "path": "head/bra/core/finding_enforcer.py",
+            "symbol": "merge_finding_output",
+            "line": 1639
+          },
+          {
+            "path": "head/bra/core/finding_enforcer.py",
+            "symbol": "validate_finding_record",
+            "line": 1482
+          }
+        ]
+      },
+      {
+        "id": "reports",
+        "title": "Deliverables",
+        "role": "Report, disclosure, close-out, and lessons.",
+        "layer": "output",
+        "source": [
+          {
+            "path": "boots/engage.py",
+            "symbol": "_ensure_end_intake_ready",
+            "line": 2921
+          },
+          {
+            "path": "boots/engage.py",
+            "symbol": "_run_end_engagement",
+            "line": 2985
+          },
+          {
+            "path": "body/layer1/scripts/report-ready.py",
+            "symbol": "_generate_report",
+            "line": 519
+          },
+          {
+            "path": "body/layer1/scripts/disclose.py",
+            "symbol": "main",
+            "line": 781
+          }
+        ]
+      },
+      {
+        "id": "review",
+        "title": "Proposal review",
+        "role": "Accept, deny, defer, and promote reusable values.",
+        "layer": "growth",
+        "source": [
+          {
+            "path": "body/layer1/lib/promotion.py",
+            "symbol": "_layer2_write_scope",
+            "line": 88
+          },
+          {
+            "path": "body/layer1/lib/promotion.py",
+            "symbol": "promote_from_pitch",
+            "line": 454
+          },
+          {
+            "path": "body/layer1/lib/promotion.py",
+            "symbol": "_route_section",
+            "line": 437
+          }
+        ]
+      },
+      {
+        "id": "doctrine",
+        "title": "Reusable doctrine",
+        "role": "Methods, workflows, skills, tools, and recommendations.",
+        "layer": "growth",
+        "source": [
+          {
+            "path": "body/layer1/lib/target_type_detector.py",
+            "symbol": "get_methodology_for_type",
+            "line": 116
+          },
+          {
+            "path": "body/layer1/lib/methodology_loader.py",
+            "symbol": "extract_phases",
+            "line": 60
+          },
+          {
+            "path": "body/layer1/lib/phase_invoker.py",
+            "symbol": "output_phase_context",
+            "line": 169
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "from": "operator",
+        "to": "boots",
+        "label": "scope and decisions"
+      },
+      {
+        "from": "external",
+        "to": "boots",
+        "label": "service-token requests"
+      },
+      {
+        "from": "boots",
+        "to": "runner",
+        "label": "managed work"
+      },
+      {
+        "from": "runner",
+        "to": "model",
+        "label": "model turns"
+      },
+      {
+        "from": "model",
+        "to": "hooks",
+        "label": "tool proposals"
+      },
+      {
+        "from": "hooks",
+        "to": "policy",
+        "label": "normalized policy requests"
+      },
+      {
+        "from": "policy",
+        "to": "authority",
+        "label": "permission checks"
+      },
+      {
+        "from": "policy",
+        "to": "privacy",
+        "label": "execution substitution"
+      },
+      {
+        "from": "policy",
+        "to": "capture",
+        "label": "permitted tool results"
+      },
+      {
+        "from": "capture",
+        "to": "materializers",
+        "label": "provenance"
+      },
+      {
+        "from": "runner",
+        "to": "materializers",
+        "label": "marker events"
+      },
+      {
+        "from": "materializers",
+        "to": "findings",
+        "label": "finding records"
+      },
+      {
+        "from": "findings",
+        "to": "reports",
+        "label": "selected records"
+      },
+      {
+        "from": "reports",
+        "to": "review",
+        "label": "lessons and proposals"
+      },
+      {
+        "from": "review",
+        "to": "doctrine",
+        "label": "accepted values"
+      },
+      {
+        "from": "doctrine",
+        "to": "runner",
+        "label": "method context"
+      }
+    ]
+  },
+  "useCases": [
+    {
+      "title": "An operator-led assessment",
+      "description": "Coordinate model reasoning and existing tools while reviewing scope and consequential requests.",
+      "outcome": "A defined engagement with captured evidence, structured findings, and reviewed deliverables."
+    },
+    {
+      "title": "A device or application investigation",
+      "description": "Use the selected method for application, firmware, protocol, or device analysis.",
+      "outcome": "Target-specific phases connected to shared permission and evidence mechanisms."
+    },
+    {
+      "title": "An engagement handoff",
+      "description": "Resume work from scope, decisions, captures, findings, and pending records.",
+      "outcome": "Operational continuity beyond a single model turn or operator memory."
+    },
+    {
+      "title": "A local inference deployment",
+      "description": "Route model requests to a configured OpenAI-compatible service on the selected infrastructure.",
+      "outcome": "Backend choice while retaining the SDK tool, hook, and record paths."
+    },
+    {
+      "title": "A reusable security practice",
+      "description": "Review lessons, tool gaps, methods, and recurring techniques after assessments.",
+      "outcome": "Retained doctrine through accepted proposals and controlled promotion."
+    }
+  ],
+  "sourceRoots": [
+    "boots",
+    "head/bra",
+    "body/layer1",
+    "tools",
+    "2x4"
+  ],
+  "controlSummary": "BRA starts with engagement-local paths and tool-specific operation checks. Registered SDK hooks add activity, target, token, and operator decisions. Capture and record gates then connect accepted findings to supporting material.",
+  "controlLayers": [
+    {
+      "id": "workspace",
+      "title": "Engagement-local process state",
+      "kind": "observation",
+      "boundary": "SDK environment and working directory",
+      "mechanism": "The wrapper places HOME, Claude state, temporary files, and XDG directories under body/.bra.",
+      "prevents": "Routine SDK state is directed into the engagement workspace.",
+      "activation": "Applied when run_agent builds the SDK options. Process identity and host permissions remain those of the launching user.",
+      "attempt": "Start a normal SDK turn.",
+      "decision": "Create engagement-local state directories and supply them to the SDK process.",
+      "source": [
+        {
+          "path": "head/bra/core/agent.py",
+          "symbol": "_build_claude_runtime_env",
+          "line": 35
+        },
+        {
+          "path": "head/bra/core/agent.py",
+          "symbol": "run_agent",
+          "line": 80
+        }
+      ]
+    },
+    {
+      "id": "file-policy",
+      "title": "Resolved file-operation paths",
+      "kind": "operation gate",
+      "boundary": "SDK Read, Grep, Glob, Write, and Edit requests",
+      "mechanism": "The file adapter calls the Body guard. The guard resolves file paths before applying tool-specific policy.",
+      "prevents": "Write/Edit requests cannot change layer1 through this path. State writes must match the declared locations.",
+      "activation": "Registered in normal and documentation hooks. Missing, invalid, nonzero, or timed-out guard responses block. Reads have selected privacy restrictions.",
+      "attempt": "Write body/layer1/rules/scope.md through the SDK Write tool.",
+      "decision": "Return LAYER1_IMMUTABLE. A template-write or framework-development token does not override this rule.",
+      "source": [
+        {
+          "path": "head/bra/hooks/file_hook.py",
+          "symbol": "_run_file_guard",
+          "line": 57
+        },
+        {
+          "path": "body/layer1/hooks/file-guard.py",
+          "symbol": "_normalize_target",
+          "line": 98
+        },
+        {
+          "path": "body/layer1/hooks/file-guard.py",
+          "symbol": "_check_policy",
+          "line": 396,
+          "endLine": 409
+        }
+      ]
+    },
+    {
+      "id": "shell-paths",
+      "title": "Recognized Bash path references",
+      "kind": "operation gate",
+      "boundary": "Path tokens and write patterns in a Bash command string",
+      "mechanism": "The approval hook resolves selected absolute path candidates. The Body guard checks recognized write contexts and restricted path substrings.",
+      "prevents": "Non-exempt commands with detected outside paths are refused before ordinary invocation approval. Recognized restricted output paths are refused by Body policy.",
+      "activation": "Approval path screening requires tool approval enabled and occurs after exemptions and session matches. Body checks require bash-guard.py to run.",
+      "attempt": "Submit an unapproved Bash command that writes to /tmp/result.txt.",
+      "decision": "The outside-path screen blocks first. It does not grant a tool approval for that detected path.",
+      "source": [
+        {
+          "path": "head/bra/hooks/tool_approval_hook.py",
+          "symbol": "_outside_bra_path",
+          "line": 218
+        },
+        {
+          "path": "head/bra/hooks/tool_approval_hook.py",
+          "symbol": "check_tool_approval_hook",
+          "line": 807,
+          "endLine": 820
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_check_output_containment",
+          "line": 758
+        }
+      ]
+    },
+    {
+      "id": "alias-release",
+      "title": "Local alias execution and return",
+      "kind": "operation gate",
+      "boundary": "Mapped Bash command execution inside the Body guard",
+      "mechanism": "After original-command policy checks, the guard substitutes known aliases, runs a local shell, masks output, and returns a block-style preview.",
+      "prevents": "The original SDK invocation is blocked after local execution, which avoids a second execution through that invocation.",
+      "activation": "Requires readable mappings, a matching alias, and no ANON-DISABLE token. No second target check evaluates the substituted command.",
+      "attempt": "Submit curl http://blanket/ with a known blanket mapping and matching tool permission.",
+      "decision": "Execute the substituted local command, save masked output when available, and return ANON_INTERCEPT_OK with its actual exit code.",
+      "source": [
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_anon_intercept",
+          "line": 1024,
+          "endLine": 1037
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_anon_unmask",
+          "line": 842
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_anon_execute_and_capture",
+          "line": 888
+        }
+      ]
+    },
+    {
+      "id": "activity",
+      "title": "Recognized activity classes",
+      "kind": "policy gate",
+      "boundary": "Network and static patterns in the original Bash command",
+      "mechanism": "The guard recognizes configured static, localhost, and network patterns. Network matches use YES, NO, or ASK activity state.",
+      "prevents": "A recognized network test is refused when activity is NO, or ASK has no active-testing approval.",
+      "activation": "Missing activity state becomes ASK. Static matches and localhost patterns bypass this activity gate. Other command checks still run.",
+      "attempt": "Run nmap -sn 203.0.113.20 with activity ASK and no active-testing token.",
+      "decision": "Return a block before target evaluation or execution.",
+      "source": [
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_check_active_testing",
+          "line": 389,
+          "endLine": 402
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_get_active_scope_setting",
+          "line": 313
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "title": "Extracted target and scope level",
+      "kind": "policy gate",
+      "boundary": "One recognized target from the original Bash command",
+      "mechanism": "The guard extracts a CIDR, IPv4 address, or recognized domain. Approval comes from original targets, discovered records, or literal scope text.",
+      "prevents": "An extracted target absent from all accepted sources returns SCOPE_CHECK_REQUIRED. A resolved NONE level refuses interaction.",
+      "activation": "Simple local commands bypass target extraction. Empty extraction skips this gate. Scope text and original targets resolve FULL before discovered levels. CUSTOM returns allow.",
+      "attempt": "Run nmap -sn 203.0.113.20 with activity YES and no matching scope or target record.",
+      "decision": "Refuse execution and request an operator scope decision. Word-only aliases have no post-substitution scope check.",
+      "source": [
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_extract_target",
+          "line": 427
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_is_target_approved",
+          "line": 515
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_scope_level",
+          "line": 550,
+          "endLine": 563
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_is_operation_allowed",
+          "line": 571
+        }
+      ]
+    },
+    {
+      "id": "operation-tokens",
+      "title": "Matched operation and scan tokens",
+      "kind": "policy gate",
+      "boundary": "Recognized dangerous, installation, push, and scan patterns",
+      "mechanism": "The Body guard compares command patterns with environment or approval-file tokens. Aggressive scans accept a scan-class file or active-testing token.",
+      "prevents": "A matching destructive, system-install, push, or aggressive-scan pattern can be refused without its applicable approval.",
+      "activation": "Pattern-based checks apply when the Bash guard runs. Virtual-environment and user-install matches take earlier allow branches in the installation check.",
+      "attempt": "Request a matched forced Git push without the required token.",
+      "decision": "Return the first matched operation-token requirement. Separate policy checks continue only after that requirement passes.",
+      "source": [
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_check_destructive_tokens",
+          "line": 621
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_check_aggressive_scan",
+          "line": 787
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_has_token",
+          "line": 290
+        }
+      ]
+    },
+    {
+      "id": "tool-approval",
+      "title": "Matching invocation and script authority",
+      "kind": "operation gate",
+      "boundary": "Non-exempt SDK tool requests and recognized script invocations",
+      "mechanism": "The approval hook matches invocation files, retry identity, expiring retry grants, or session permission. Bash then checks recognized script paths.",
+      "prevents": "An unapproved non-exempt request returns TOOL_APPROVAL_REQUIRED. A recognized script path without approval returns SCRIPT_APPROVAL_REQUIRED.",
+      "activation": "Tool approval is enabled by default. Read, Grep, Glob, Write, Edit, TaskOutput, and ToolSearch are exempt. Simple allowlisted Bash and internal layer1 paths are exempt.",
+      "attempt": "Request nmap -sn 203.0.113.20 without any matching tool approval.",
+      "decision": "Block for operator review. A granted tool approval does not add the target to scope.",
+      "source": [
+        {
+          "path": "head/bra/hooks/tool_approval_hook.py",
+          "symbol": "check_tool_approval_hook",
+          "line": 807,
+          "endLine": 820
+        },
+        {
+          "path": "head/bra/hooks/tool_approval_hook.py",
+          "symbol": "_is_tool_approval_enabled",
+          "line": 677
+        },
+        {
+          "path": "head/bra/hooks/bash_hook.py",
+          "symbol": "pre_bash",
+          "line": 63
+        },
+        {
+          "path": "head/bra/core/approval.py",
+          "symbol": "has_script_approval",
+          "line": 881
+        }
+      ]
+    },
+    {
+      "id": "stop",
+      "title": "Stop state before managed tool work",
+      "kind": "task gate",
+      "boundary": "Registered pre-tool events and the Body Bash guard",
+      "mechanism": "The SDK hook checks BRA_STOP, .bra/STOP, and the CLAUDE.md status block. The Body command guard checks stop state again.",
+      "prevents": "An active stop returns a tool block. The command guard returns exit 99 before its command execution path.",
+      "activation": "Stop is clear when none of the recognized signals is active. Hook decisions do not constitute host-wide process interception.",
+      "attempt": "Create .bra/STOP before a managed Bash request.",
+      "decision": "Return the stop decision. No approval token overrides the stop predicate.",
+      "source": [
+        {
+          "path": "head/bra/hooks/killswitch.py",
+          "symbol": "is_killswitch_active",
+          "line": 32
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_is_killswitch_active",
+          "line": 254
+        },
+        {
+          "path": "head/bra/hooks/registry.py",
+          "symbol": "build_hooks",
+          "line": 57
+        }
+      ]
+    },
+    {
+      "id": "finding-task",
+      "title": "Pending finding and documentation work",
+      "kind": "task gate",
+      "boundary": "SDK tool selection while findings need documentation",
+      "mechanism": "The normal finding hook restricts consequential work when the pending queue exists. Findings handoff also checks explicit file paths.",
+      "prevents": "Normal queued finding work blocks non-read tools except selected finding writes. Handoff permits only its declared file tools and destinations.",
+      "activation": "Read, Glob, and Grep remain allowed. Missing or unreadable queues allow. The documentation hook set omits finding guard; an active documentation subagent also releases it.",
+      "attempt": "Request ordinary assessment work while a readable pending finding remains and no subagent flag is active.",
+      "decision": "Return the documentation block. Later hooks can still run; alias execution has no separate finding-queue predicate.",
+      "source": [
+        {
+          "path": "head/bra/hooks/finding_guard.py",
+          "symbol": "pre_finding_guard",
+          "line": 33
+        },
+        {
+          "path": "head/bra/hooks/tool_approval_hook.py",
+          "symbol": "_enforce_findings_handoff_scope",
+          "line": 342
+        },
+        {
+          "path": "head/bra/hooks/registry.py",
+          "symbol": "build_documentation_hooks",
+          "line": 27
+        }
+      ]
+    },
+    {
+      "id": "guidance",
+      "title": "Model-visible policy and task context",
+      "kind": "model guidance",
+      "boundary": "Prompts, method context, and compaction instructions",
+      "mechanism": "The first normal turn includes CLAUDE.md. Method and phase routines supply the task context. Compaction restores governance text.",
+      "prevents": "Guidance directs target selection, exclusions, methods, evidence use, and response to blocks. It does not itself refuse a host operation.",
+      "activation": "Applied through normal prompt construction and PreCompact. A custom documentation system prompt uses a separate hook set and task contract.",
+      "attempt": "Ask the agent to contact a target listed only as excluded scope prose.",
+      "decision": "The model receives the exclusion instruction. Bash literal scope matching does not distinguish that exclusion section.",
+      "source": [
+        {
+          "path": "head/bra/core/agent.py",
+          "symbol": "run_agent",
+          "line": 80
+        },
+        {
+          "path": "head/bra/hooks/compact_hook.py",
+          "symbol": "pre_compact",
+          "line": 17
+        },
+        {
+          "path": "body/layer1/lib/phase_invoker.py",
+          "symbol": "output_phase_context",
+          "line": 169
+        }
+      ]
+    },
+    {
+      "id": "capture",
+      "title": "Captured output and source identity",
+      "kind": "observation",
+      "boundary": "Tool results and locally intercepted Bash output",
+      "mechanism": "PostToolUse captures nonempty results, tool metadata, and artifact hashes. The alias intercept writes its own masked capture and provenance.",
+      "prevents": "Source records make later attribution and local content checks possible. Capture does not authorize the completed operation.",
+      "activation": "Post hooks and capture writes are best effort. Generic post capture masks saved artifacts when mappings load; it does not replace the SDK response.",
+      "attempt": "A permitted tool returns nonempty output.",
+      "decision": "Attempt to save a raw artifact and index its source. WATCH and TRACK add token-selected logs.",
+      "source": [
+        {
+          "path": "head/bra/hooks/post_hook.py",
+          "symbol": "post_tool",
+          "line": 511
+        },
+        {
+          "path": "head/bra/hooks/post_hook.py",
+          "symbol": "_mask_for_artifact",
+          "line": 386
+        },
+        {
+          "path": "body/layer1/hooks/bash-guard.py",
+          "symbol": "_anon_append_evidence_index",
+          "line": 969
+        }
+      ]
+    },
+    {
+      "id": "finding-record",
+      "title": "Finding acceptance and queue release",
+      "kind": "record gate",
+      "boundary": "Structured finding record and referenced proof material",
+      "mechanism": "The enforcer checks sections, metadata, placeholders, hash syntax, applicable local artifact content, and proof references or inline commands.",
+      "prevents": "An incomplete or mismatched record remains pending. A marker alone cannot pass these record checks.",
+      "activation": "Applies through validate_finding_record and queue reconciliation. N/A hashes are supported. Artifact checks apply to qualifying local references.",
+      "attempt": "Complete a finding with a SHA-256 value that differs from its referenced local artifact.",
+      "decision": "Return an invalid validation result and retain the pending finding. The check does not establish semantic exploit validity.",
+      "source": [
+        {
+          "path": "head/bra/core/finding_enforcer.py",
+          "symbol": "validate_finding_record",
+          "line": 1569,
+          "endLine": 1582
+        },
+        {
+          "path": "head/bra/core/finding_enforcer.py",
+          "symbol": "check_and_dequeue_completed",
+          "line": 2281
+        }
+      ]
+    },
+    {
+      "id": "operator",
+      "title": "Scope, exceptions, and publication decisions",
+      "kind": "operator authority",
+      "boundary": "Managed approval interface and engagement records",
+      "mechanism": "The manager records approval or denial, grants matching state, and selects continuation. Scope registration updates persistent target records.",
+      "prevents": "A denial returns to operator choices without retrying that command. An unavailable grant does not create matching permission.",
+      "activation": "Normal UI startup creates override history. Direct scope registration is a trusted backend helper; CLI registration consumes SCOPE-GRANT. Publication remains an operator review responsibility.",
+      "attempt": "Deny a scope decision after SCOPE_CHECK_REQUIRED.",
+      "decision": "Record the denial when history is active and return to awaiting input. No target grant is written.",
+      "source": [
+        {
+          "path": "boots/engage.py",
+          "symbol": "_process_approval_result",
+          "line": 1261,
+          "endLine": 1274
+        },
+        {
+          "path": "head/bra/core/approval.py",
+          "symbol": "grant_scope",
+          "line": 486
+        },
+        {
+          "path": "body/layer1/scripts/approve-target.py",
+          "symbol": "grant_target_from_ui",
+          "line": 427
+        },
+        {
+          "path": "boots/engage.py",
+          "symbol": "_record_override_decision",
+          "line": 630
+        }
+      ]
+    },
+    {
+      "id": "promotion",
+      "title": "Reviewed knowledge transfer",
+      "kind": "record gate",
+      "boundary": "Checked pitch items and reusable template destinations",
+      "mechanism": "Promotion selects checked, unimplemented items, routes recognized sections, and uses a temporary template-write token around supported destinations.",
+      "prevents": "Unchecked proposals do not enter this promotion path. Reusable override advice does not become an active engagement exception.",
+      "activation": "Approval is represented by checked pitch content. The trusted routine creates its own temporary token and removes it if created there. Existing tokens remain.",
+      "attempt": "Promote a pitch containing one unchecked proposal and one checked tool entry.",
+      "decision": "Skip the unchecked proposal. Route the accepted tool entry, mark it implemented, and record promotion activity.",
+      "source": [
+        {
+          "path": "body/layer1/lib/promotion.py",
+          "symbol": "promote_from_pitch",
+          "line": 474,
+          "endLine": 487
+        },
+        {
+          "path": "body/layer1/lib/promotion.py",
+          "symbol": "_layer2_write_scope",
+          "line": 88
+        },
+        {
+          "path": "body/layer1/lib/promotion.py",
+          "symbol": "add_override",
+          "line": 374
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "docs/assets/screenshots/loadout-workflows.png",
+      "title": "Workflows and live engagement",
+      "alt": "BRA Loadout page showing reusable workflows beside a floating engagement conversation.",
+      "caption": "Reusable workflows remain visible beside the floating engagement conversation.",
+      "kind": "interface",
+      "category": "Operations"
+    },
+    {
+      "path": "docs/assets/screenshots/engagement-setup.png",
+      "title": "Engagement setup",
+      "alt": "BRA engagement wizard with authorization, target fields, and scope boundaries.",
+      "caption": "The setup form shows authorization, target details, and scope boundaries.",
+      "kind": "interface",
+      "category": "Operations"
+    },
+    {
+      "path": "docs/assets/screenshots/engagement-scope-dashboard.png",
+      "title": "Engagement scope dashboard",
+      "alt": "BRA Dashboard with target categories, methodology, scope, and authorization details.",
+      "caption": "The dashboard brings target categories, methodology, scope, and authorization into one view.",
+      "kind": "interface",
+      "category": "Operations"
+    },
+    {
+      "path": "docs/assets/screenshots/activity-approvals.png",
+      "title": "Activity and approvals",
+      "alt": "BRA engagement wizard with active testing options and separate approval switches.",
+      "caption": "Active testing and separate approval switches appear in the engagement wizard.",
+      "kind": "interface",
+      "category": "Policy and privacy"
+    },
+    {
+      "path": "docs/assets/screenshots/tool-command-approval.png",
+      "title": "Command approval",
+      "alt": "BRA Operations page with a Bash command awaiting tool approval.",
+      "caption": "A command approval card presents the request and the available operator decisions.",
+      "kind": "interface",
+      "category": "Policy and privacy"
+    },
+    {
+      "path": "docs/assets/screenshots/privacy-alias-map.png",
+      "title": "Privacy alias mapping",
+      "alt": "BRA Loadout page with a lab address and its word alias.",
+      "caption": "The operator mapping table connects a lab address with its reusable alias.",
+      "kind": "interface",
+      "category": "Policy and privacy"
+    },
+    {
+      "path": "docs/assets/screenshots/captured-scan-artifact.png",
+      "title": "Captured scan artifact",
+      "alt": "BRA evidence viewer displaying captured scan output and an engagement conversation.",
+      "caption": "The evidence viewer displays captured scan output while the engagement conversation remains available.",
+      "kind": "interface",
+      "category": "Evidence and review"
+    },
+    {
+      "path": "docs/assets/screenshots/investigation-leads.png",
+      "title": "Investigation leads",
+      "alt": "BRA Leads page with open investigation candidates and source links.",
+      "caption": "Open leads retain investigation candidates and links to their source material.",
+      "kind": "interface",
+      "category": "Evidence and review"
+    },
+    {
+      "path": "docs/assets/screenshots/finding-record-details.png",
+      "title": "Finding record details",
+      "alt": "BRA finding detail with severity, artifact location, and SHA-256 evidence fields.",
+      "caption": "The finding view combines severity, artifact references, hashes, and impact analysis.",
+      "kind": "interface",
+      "category": "Evidence and review"
+    },
+    {
+      "path": "docs/assets/screenshots/report-risk-summary.png",
+      "title": "Report risk summary",
+      "alt": "BRA Report page with a risk narrative and finding severity table.",
+      "caption": "The report view combines the assessment narrative with a finding severity summary.",
+      "kind": "interface",
+      "category": "Evidence and review"
+    },
+    {
+      "path": "docs/assets/screenshots/mobile-artifact-viewer.png",
+      "title": "Mobile artifact viewer",
+      "alt": "BRA mobile artifact viewer with rendered Markdown and raw-view controls.",
+      "caption": "The artifact viewer presents file content with display and download controls.",
+      "kind": "interface",
+      "category": "Evidence and review"
+    },
+    {
+      "path": "docs/assets/screenshots/growth-review.png",
+      "title": "Growth proposal review",
+      "alt": "BRA Growth page showing methodology proposals with pending review controls.",
+      "caption": "Growth proposals remain pending until the operator reviews each item.",
+      "kind": "interface",
+      "category": "Growth"
+    },
+    {
+      "path": "docs/assets/screenshots/growth-ingest-confirmation.png",
+      "title": "Growth ingestion confirmation",
+      "alt": "BRA confirmation dialog before reviewed knowledge is ingested.",
+      "caption": "The confirmation dialog separates proposal review from knowledge ingestion.",
+      "kind": "interface",
+      "category": "Growth"
+    },
+    {
+      "path": "docs/assets/screenshots/mobile-websocket-controls.png",
+      "title": "Mobile WebSocket controls",
+      "alt": "BRA mobile WebSocket console with approval, scope, and lifecycle controls.",
+      "caption": "The WebSocket console groups connection, approval, scope, and lifecycle controls.",
+      "kind": "interface",
+      "category": "Mobile operations"
+    },
+    {
+      "path": "docs/assets/screenshots/mobile-2x4-chat.png",
+      "title": "Mobile 2x4 chat",
+      "alt": "BRA mobile 2x4 chat with takeover and stand-down controls.",
+      "caption": "The chat view groups messages with takeover and stand-down controls.",
+      "kind": "interface",
+      "category": "Mobile operations"
+    },
+    {
+      "path": "docs/assets/screenshots/mobile-readiness.png",
+      "title": "Mobile readiness results",
+      "alt": "BRA mobile Health page with readiness totals and grouped checks.",
+      "caption": "The Health view summarizes readiness results and grouped checks.",
+      "kind": "interface",
+      "category": "Mobile operations"
+    },
+    {
+      "path": "docs/assets/screenshots/mobile-diagnostics.png",
+      "title": "Mobile engagement diagnostics",
+      "alt": "BRA mobile diagnostics with engagement state and connection status.",
+      "caption": "Diagnostics show engagement state, connections, and available inspection panels.",
+      "kind": "interface",
+      "category": "Mobile operations"
+    },
+    {
+      "path": "docs/assets/screenshots/system-architecture.png",
+      "title": "System architecture",
+      "alt": "BRA architecture with operator, command center, governance, agent tools, and supporting record flows.",
+      "caption": "The operator works through the command center. Governance, privacy, records, and reviewed growth support the integrated agent workflow.",
+      "kind": "architecture",
+      "category": "Architecture"
+    },
+    {
+      "path": "docs/assets/screenshots/engagement-lifecycle.png",
+      "title": "Engagement lifecycle",
+      "alt": "BRA engagement stages: scope, loadout, precheck, run, and report.",
+      "caption": "An engagement proceeds from scope and loadout through readiness checks, execution, and report preparation.",
+      "kind": "architecture",
+      "category": "Architecture"
+    }
+  ]
+}

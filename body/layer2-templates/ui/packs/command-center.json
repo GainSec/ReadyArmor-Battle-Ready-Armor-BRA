@@ -1,0 +1,41 @@
+{
+  "ui_pack_version": 2,
+  "meta": {
+    "name": "command-center",
+    "description": "test",
+    "version": "2"
+  },
+  "theme_tokens": {
+    "option_label_max_chars": 20,
+    "accent": "cyan",
+    "muted": "dim",
+    "panel_border_style": "round",
+    "sidebar_width": 28
+  },
+  "layout": {
+    "kind": "ops-grid",
+    "density": "balanced"
+  },
+  "views": {
+    "splash": {
+      "show_quote": true
+    },
+    "engage": {
+      "sidebar_default_visible": false,
+      "options_density": "balanced",
+      "show_secondary_hints": true
+    },
+    "menu": {
+      "preview_density": "balanced"
+    }
+  },
+  "bindings": {},
+  "assets": {
+    "branding_title": "BRA",
+    "branding_subtitle": "GainSec",
+    "quotes": [
+      "Test quote"
+    ]
+  },
+  "hooks": {}
+}

@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "name": "command-center",
+    "description": "High-readability command center layout",
+    "version": "1"
+  },
+  "theme_tokens": {
+    "option_label_max_chars": 28,
+    "accent": "$accent",
+    "muted": "$text-muted",
+    "panel_border_style": "round $primary",
+    "sidebar_width": 28
+  },
+  "view_overrides": {
+    "sidebar_default_visible": false,
+    "options_density": "balanced",
+    "show_secondary_hints": true,
+    "menu_preview_density": "balanced",
+    "status_bar_compact": true
+  },
+  "assets": {
+    "branding_title": "Battle Ready Armor",
+    "branding_subtitle": "GainSec Command Center",
+    "quotes": [
+      "Rigor first. Speed second."
+    ]
+  }
+}
